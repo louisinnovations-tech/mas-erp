@@ -19,6 +19,7 @@ class CheckURL
      */
     public function handle(Request $request, Closure $next)
     {
+        config(['app.url' => $request->root(),'app.asset_url' => $request->root()]);
 
         return $next($request);
 

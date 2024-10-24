@@ -55,6 +55,8 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+    'client_url' => env('CLIENT_URL', 'https://client.mas.com.qa'),
+    'employee_url' => env('EMPLOYEE_URL', 'https://erp.mas.com.qa'),
 
     'asset_url' => env('ASSET_URL'),
 

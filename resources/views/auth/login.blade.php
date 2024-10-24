@@ -50,14 +50,14 @@
     <div class="card-body">
         @if($loginType)
             @php
-                $loginText = $loginType . ' Employee Login';
+                $loginText = $loginType . ' Login';
             @endphp
             <div>
                 <h2 class="mb-3 f-w-600">{{ __($loginText) }} </h2>
             </div>
         @else
             <div>
-                <h2 class="mb-3 f-w-600">{{ __('Employee Login') }} </h2>
+                <h2 class="mb-3 f-w-600">{{ __((request()->root() === config('app.client_url') ? 'Client' : 'Employee') .' Login') }} </h2>
             </div>
         @endif
         <div class="custom-login-form">
