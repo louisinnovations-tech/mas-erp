@@ -18,7 +18,7 @@
 @php
     $loginType = request()->query('loginType');
 @endphp
-{{-- @section('language-bar')
+@section('language-bar')
 
     <div class="lang-dropdown-only-desk">
         <li class="dropdown dash-h-item drp-language">
@@ -45,29 +45,8 @@
             </div>
         </li>
     </div>
-@endsection --}}
-@section('language-bar')
-    <div class="lang-dropdown-only-desk">
-        <li class="dropdown dash-h-item drp-language">
-            <a class="dash-head-link dropdown-toggle btn" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                <span class="drp-text"> {{ ucFirst($languages[$lang]) }}</span>
-            </a>
-            <div class="dropdown-menu dash-h-dropdown dropdown-menu-end">
-                @php
-                    // Define the allowed languages
-                    $allowedLanguages = ['en' => 'English', 'ar' => 'Arabic', 'fr' => 'French'];
-                @endphp
-
-                @foreach ($allowedLanguages as $code => $language)
-                    <a href="{{ route('login', $code) }}{{ $loginType ? '?loginType=' . $loginType : '' }}" tabindex="0"
-                        class="dropdown-item {{ $code == $lang ? 'active' : '' }}">
-                        <span>{{ ucFirst($language) }}</span>
-                    </a>
-                @endforeach
-            </div>
-        </li>
-    </div>
 @endsection
+
 
 @section('content')
     <div class="card-body">
@@ -108,14 +87,14 @@
                     @enderror
                 </div>
                 <!-- <div class="form-group mb-4">
-                                    <div class="d-flex flex-wrap align-items-center justify-content-between">
-                                        @if (Route::has('password.request'))
+                                        <div class="d-flex flex-wrap align-items-center justify-content-between">
+                                            @if (Route::has('password.request'))
     <span>
-                                                <a href="{{ route('password.request', $lang) }}" tabindex="0">{{ __('Forgot Your Password?') }}</a>
-                                            </span>
+                                                    <a href="{{ route('password.request', $lang) }}" tabindex="0">{{ __('Forgot Your Password?') }}</a>
+                                                </span>
     @endif
-                                    </div>
-                                </div> -->
+                                        </div>
+                                    </div> -->
                 @if ($settings['recaptcha_module'] == 'on')
                     <div class="form-group mb-4">
                         {!! NoCaptcha::display() !!}

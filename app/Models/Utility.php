@@ -943,26 +943,48 @@ class Utility extends Model
         return self::$languages;
 
     }
-    public static function fetchLanguages(){
+    // public static function fetchLanguages(){
+    //     $languages = Utility::langList();
+
+    //     if(Schema::hasTable('languages')){
+    //         $settings = self::settings();
+
+    //         if(!empty($settings['disable_lang'])){
+    //             $disabledlang = explode(',', $settings['disable_lang']);
+
+    //             $languages = Languages::whereNotIn('code',$disabledlang)->pluck('fullName','code');
+
+    //         }
+    //         else{
+    //             $languages = Languages::pluck('fullName','code');
+    //         }
+    //     }
+
+    //     return $languages;
+    // }
+
+    public static function fetchLanguages()
+    {
         $languages = Utility::langList();
-
-        if(Schema::hasTable('languages')){
+    
+        $desiredLanguages = ['en', 'ar', 'fr'];
+    
+        if (Schema::hasTable('languages')) {
             $settings = self::settings();
-
-            if(!empty($settings['disable_lang'])){
+    
+            if (!empty($settings['disable_lang'])) {
                 $disabledlang = explode(',', $settings['disable_lang']);
 
-                $languages = Languages::whereNotIn('code',$disabledlang)->pluck('fullName','code');
-
-            }
-            else{
-                $languages = Languages::pluck('fullName','code');
+                $languages = Languages::whereNotIn('code', $disabledlang)
+                                      ->pluck('fullName', 'code');
+            } else {
+                $languages = Languages::pluck('fullName', 'code');
             }
         }
-
-        return $languages;
+    
+        return array_intersect_key($languages->toArray(), array_flip($desiredLanguages));
     }
-
+    
 
     public static function keyWiseUpload_file($request, $key_name, $name, $path, $data_key, $custom_validation = [])
     {
