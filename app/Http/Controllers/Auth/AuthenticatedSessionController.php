@@ -118,8 +118,9 @@ class AuthenticatedSessionController extends Controller
         //         'created_by' => Auth::user()->creatorId(),
         //     ]);
         // }
-        return redirect()->route('verify.otp')->with('email', $user->email);
+        // return redirect()->route('verify.otp')->with('email', $user->email);
         //return redirect()->intended(RouteServiceProvider::HOME);
+        return response()->json(['showOtpForm' => true, 'email' => $user->email]);
     }
 
     private function generateAndSendOtp($user)
@@ -151,21 +152,21 @@ class AuthenticatedSessionController extends Controller
             'email' => 'required|email',
             'otp' => 'required|numeric',
         ]);
-
+    
         $user = User::where('email', $request->email)->first();
         $otp = Otp::where('user_id', $user->id)
                   ->where('otp_code', $request->otp)
                   ->first();
-
+    
         if ($otp) {
             $otp->delete();
             Auth::login($user);
-
-            return redirect()->intended(RouteServiceProvider::HOME)->with('success', 'OTP verified successfully');
+            return response()->json(['success' => true, 'redirect' => RouteServiceProvider::HOME]);
         } else {
-            return redirect()->back()->withErrors(['otp' => 'Invalid OTP code']);
+            return response()->json(['error' => __('Invalid OTP code')], 422);
         }
     }
+    
 
     /**
      * Destroy an authenticated session.
