@@ -120,10 +120,10 @@
                         text: 'Accept all',
                         role: 'accept_all' // 'accept_selected' or 'accept_all'
                     },
-                    secondary_btn: {
-                        text: 'Reject all',
-                        role: 'accept_necessary' // 'settings' or 'accept_necessary'
-                    },
+                    // secondary_btn: {
+                    //     text: 'Reject all',
+                    //     role: 'accept_necessary' // 'settings' or 'accept_necessary'
+                    // },
                 },
                 settings_modal: {
                     title: 'Cookie preferences',

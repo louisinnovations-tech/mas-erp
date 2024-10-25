@@ -1,5 +1,5 @@
 .information-tab {
-    background: #CEDAE1;
+    background: #cedae1;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -9,7 +9,7 @@
 }
 
 .information-tab .nav-item .nav-link {
-    color: #FFFFFF;
+    color: #ffffff;
     border-radius: 0;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
@@ -19,7 +19,7 @@
 
 .select-theme-portion {
     padding: 15px;
-    border: 1px solid #DAE8F9;
+    border: 1px solid #dae8f9;
     border-radius: 14.7699px;
     -webkit-border-radius: 14.7699px;
     -moz-border-radius: 14.7699px;
@@ -33,7 +33,7 @@
 
 .theme-view-inner {
     padding: 10px;
-    border: 1px solid #DAE8F9;
+    border: 1px solid #dae8f9;
     border-radius: 14.7699px;
     -webkit-border-radius: 14.7699px;
     -moz-border-radius: 14.7699px;
@@ -85,8 +85,8 @@
     -o-transition: all ease 0.3s;
 }
 
-.colorinput .colorinput-input:checked+.border-box {
-    border-color: #162C4E;
+.colorinput .colorinput-input:checked + .border-box {
+    border-color: #162c4e;
 }
 
 .theme-view-content {
@@ -95,9 +95,8 @@
 
 .theme-view-card.selected-theme .theme-view-inner {
     box-shadow: 5px 4px 15px rgba(22, 44, 78, 0.25);
-    border-color: #162C4E;
+    border-color: #162c4e;
 }
-
 
 .theme-view-card.selected-theme .theme-view-content {
     display: block;
@@ -112,9 +111,6 @@
     margin-right: 30px;
 }
 
-
-
-
 .theme-listing::-webkit-scrollbar {
     width: 2px;
     height: 8px;
@@ -126,7 +122,7 @@
 }
 
 .theme-listing::-webkit-scrollbar-track {
-    background: #DAE8F9;
+    background: #dae8f9;
     border-radius: 10px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
@@ -140,12 +136,12 @@
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
-    background: #6FD943;
+    background: #f5d7d7;
 }
 
 .theme-preview {
     padding: 15px;
-    border: 1px solid #DAE8F9;
+    border: 1px solid #dae8f9;
     border-radius: 14.7699px;
     -webkit-border-radius: 14.7699px;
     -moz-border-radius: 14.7699px;
@@ -155,7 +151,7 @@
 
 .theme-preview-body {
     padding: 10px;
-    border: 1px solid #DAE8F9;
+    border: 1px solid #dae8f9;
     border-radius: 14.7699px;
     height: 540px;
 }
@@ -182,7 +178,7 @@
 
 .theme-detail-card {
     padding: 15px;
-    border: 1px solid #DAE8F9;
+    border: 1px solid #dae8f9;
     border-radius: 14.7699px;
     -webkit-border-radius: 14.7699px;
     -moz-border-radius: 14.7699px;
@@ -192,7 +188,7 @@
 
 .theme-detail-card .setting-block {
     padding: 15px;
-    border: 1px dashed #DAE8F9;
+    border: 1px dashed #dae8f9;
     border-radius: 14.7699px;
     -webkit-border-radius: 14.7699px;
     -moz-border-radius: 14.7699px;
@@ -224,7 +220,7 @@
 }
 
 .color-picker-wrapper {
-    border: 1px solid #E0E6EF;
+    border: 1px solid #e0e6ef;
     border-radius: 7px;
     padding: 10px;
 }
@@ -238,7 +234,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    border: 1px dashed #DFECFD;
+    border: 1px dashed #dfecfd;
     border-radius: 10px;
     padding: 10px;
     height: 100%;
@@ -247,7 +243,7 @@
 .add-new-app .proj-add-icon {
     width: 30px;
     height: 30px;
-    color: #FFFFFF;
+    color: #ffffff;
     justify-content: center;
     display: flex;
     align-items: center;
@@ -258,12 +254,12 @@
 }
 
 .setting-accordion .accordion-item {
-    border: 1px solid #E0E6EF !important;
+    border: 1px solid #e0e6ef !important;
     border-radius: 7px;
 }
 
 .setting-accordion .accordion-header {
-    background: #F8F8F8;
+    background: #f8f8f8;
     border-radius: 7px;
     -webkit-border-radius: 7px;
     -moz-border-radius: 7px;
@@ -272,7 +268,7 @@
 }
 
 .setting-accordion .accordion-header .accordion-button {
-    background: #F8F8F8 !important;
+    background: #f8f8f8 !important;
     display: flex;
     justify-content: space-between;
     border-radius: 7px;
@@ -281,7 +277,7 @@
 }
 
 .setting-accordion .accordion-header .accordion-button:not(.collapsed) {
-    border-color: #E0E6EF;
+    border-color: #e0e6ef;
 }
 
 .setting-accordion .accordion-header .accordion-button span {
@@ -324,14 +320,14 @@
 
 .bussiness-hours-header {
     padding: 15px;
-    background: #F8F8F8;
-    border: 1px solid #E0E6EF;
+    background: #f8f8f8;
+    border: 1px solid #e0e6ef;
     border-radius: 7px;
 }
 
 .services-img-setting {
-    background: #FFFFFF;
-    border: 1px dashed #DFECFD;
+    background: #ffffff;
+    border: 1px dashed #dfecfd;
     border-radius: 10px;
     padding: 15px;
     max-width: 200px;
@@ -346,7 +342,7 @@
 .services-setting-card {
     position: relative;
     padding: 15px;
-    border: 1px solid #E0E6EF;
+    border: 1px solid #e0e6ef;
     border-radius: 7px;
 }
 
@@ -364,7 +360,7 @@
     align-items: center;
     justify-content: center;
     padding: 10px;
-    border: 1px dashed #DFECFD;
+    border: 1px dashed #dfecfd;
     border-radius: 10px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
@@ -381,7 +377,7 @@
 .serv-add-icon {
     width: 30px;
     height: 30px;
-    color: #FFFFFF;
+    color: #ffffff;
     justify-content: center;
     display: flex;
     align-items: center;
@@ -404,7 +400,7 @@
 .rate label::before {
     position: absolute;
     content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='16' viewBox='0 0 17 16' fill='none'%3E%3Cpath opacity='0.4' d='M9.39412 1.07507L11.124 4.5642C11.2541 4.82698 11.5053 5.00871 11.7965 5.05058L15.7898 5.62775C16.522 5.73375 16.8142 6.63166 16.2842 7.14653L13.3973 9.94801C13.1861 10.1529 13.0899 10.4477 13.1398 10.7372L13.7998 14.5711C13.9334 15.3487 13.1166 15.942 12.4164 15.5759L8.95319 13.7632C8.69309 13.6269 8.38308 13.6269 8.12386 13.7632L4.66322 15.5741C3.96218 15.9411 3.14265 15.3469 3.27715 14.5675L3.93729 10.7372C3.98718 10.4477 3.89092 10.1529 3.6798 9.94801L0.792853 7.14653C0.261955 6.63166 0.554066 5.73375 1.28717 5.62775L5.28051 5.05058C5.5709 5.00871 5.8221 4.82698 5.95305 4.5642L7.68294 1.07507C8.03123 0.366905 9.04316 0.366905 9.39412 1.07507Z' fill='%2325314C'/%3E%3C/svg%3E");
-    transition: .3s;
+    transition: 0.3s;
 }
 
 .rate label::after {
@@ -412,14 +408,14 @@
     z-index: 1;
     content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='16' viewBox='0 0 17 16' fill='none'%3E%3Cpath d='M9.43782 1.07507L11.1677 4.5642C11.2978 4.82698 11.549 5.00871 11.8402 5.05058L15.8335 5.62775C16.5657 5.73375 16.8579 6.63166 16.3279 7.14653L13.441 9.94801C13.2298 10.1529 13.1336 10.4477 13.1835 10.7372L13.8435 14.5711C13.9771 15.3487 13.1603 15.942 12.4601 15.5759L8.99689 13.7632C8.73679 13.6269 8.42678 13.6269 8.16756 13.7632L4.70692 15.5741C4.00588 15.9411 3.18635 15.3469 3.32085 14.5675L3.98099 10.7372C4.03088 10.4477 3.93462 10.1529 3.72351 9.94801L0.836554 7.14653C0.305656 6.63166 0.597767 5.73375 1.33087 5.62775L5.32421 5.05058C5.6146 5.00871 5.86581 4.82698 5.99675 4.5642L7.72664 1.07507C8.07493 0.366905 9.08686 0.366905 9.43782 1.07507Z' fill='%2325314C'/%3E%3C/svg%3E");
     opacity: 0;
-    transition: .3s;
+    transition: 0.3s;
 }
 
-.rate input:checked~label::after {
+.rate input:checked ~ label::after {
     opacity: 1;
 }
 
-.rate input:checked~label::before {
+.rate input:checked ~ label::before {
     opacity: 0;
 }
 
@@ -436,5 +432,5 @@
     position: relative;
     cursor: pointer;
     margin-bottom: 0;
-    transition: .3s;
+    transition: 0.3s;
 }

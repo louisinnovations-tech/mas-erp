@@ -130,12 +130,12 @@ class AuthenticatedSessionController extends Controller
         $createOTP->user_id = $user->id;
         $createOTP->otp_code = $otp;
         $createOTP->save();
-        $email = $user->email;    
+        $email = $user->email;
 
         try {
             Mail::to($email)->send(new OtpMail($otp));
         } catch (\Exception $e) {
-            dd($e);
+            // dd($e);
             \Log::error('Failed to send OTP email: ' . $e->getMessage());
         }
     }

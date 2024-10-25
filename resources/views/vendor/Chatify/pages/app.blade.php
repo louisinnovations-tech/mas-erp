@@ -15,7 +15,7 @@
 
 @section('breadcrumb')
 
-<li class="breadcrumb-item active" aria-current="page">{{__('Messenger')}}</li>
+    <li class="breadcrumb-item active" aria-current="page">{{ __('Messenger') }}</li>
 @endsection
 
 @if ($color == 'theme-1')
@@ -23,48 +23,48 @@
         .m-list-active,
         .m-list-active:hover,
         .m-list-active:focus {
-            background: linear-gradient(141.55deg, #0CAF60 3.46%, #0CAF60 99.86%), #0CAF60 !important;
+            background: linear-gradient(141.55deg, #800000 3.46%, #800000 99.86%), #800000 !important;
         }
 
         .mc-sender p {
-            background: linear-gradient(141.55deg, #0CAF60 3.46%, #0CAF60 99.86%), #0CAF60 !important;
+            background: linear-gradient(141.55deg, #800000 3.46%, #800000 99.86%), #800000 !important;
         }
 
         .messenger-favorites div.avatar {
-            box-shadow: 0px 0px 0px 2px #0CAF60 !important;
+            box-shadow: 0px 0px 0px 2px #800000 !important;
         }
 
         .messenger-listView-tabs a,
         .messenger-listView-tabs a:hover,
         .messenger-listView-tabs a:focus {
-            color: linear-gradient(141.55deg, #0CAF60 3.46%, #0CAF60 99.86%), #0CAF60 !important;
+            color: linear-gradient(141.55deg, #800000 3.46%, #800000 99.86%), #800000 !important;
         }
 
         .m-header svg {
-            color: #0CAF60 !important;
+            color: #800000 !important;
         }
 
         .active-tab {
-            border-bottom: 2px solid #0CAF60 !important;
+            border-bottom: 2px solid #800000 !important;
         }
 
         .messenger-infoView nav a {
 
-            color: linear-gradient(141.55deg, #0CAF60 3.46%, #0CAF60 99.86%), #0CAF60 !important;
+            color: linear-gradient(141.55deg, #800000 3.46%, #800000 99.86%), #800000 !important;
         }
 
         .lastMessageIndicator {
-            color: #0CAF60 !important;
+            color: #800000 !important;
         }
 
         .messenger-list-item td span .lastMessageIndicator {
 
-            color: #0CAF60 !important;
+            color: #800000 !important;
             font-weight: bold;
         }
 
         .messenger-sendCard button svg {
-            color: #0CAF60 !important;
+            color: #800000 !important;
         }
 
         .messenger-list-item.m-list-active td span .lastMessageIndicator {
@@ -133,48 +133,48 @@
         .m-list-active,
         .m-list-active:hover,
         .m-list-active:focus {
-            background: linear-gradient(141.55deg, #6fd943 3.46%, #6fd943 99.86%), #6fd943 !important;
+            background: linear-gradient(141.55deg, #f5d7d7 3.46%, #f5d7d7 99.86%), #f5d7d7 !important;
         }
 
         .mc-sender p {
-            background: linear-gradient(141.55deg, #6fd943 3.46%, #6fd943 99.86%), #6fd943 !important;
+            background: linear-gradient(141.55deg, #f5d7d7 3.46%, #f5d7d7 99.86%), #f5d7d7 !important;
         }
 
         .messenger-favorites div.avatar {
-            box-shadow: 0px 0px 0px 2px #6fd943 !important;
+            box-shadow: 0px 0px 0px 2px #f5d7d7 !important;
         }
 
         .messenger-listView-tabs a,
         .messenger-listView-tabs a:hover,
         .messenger-listView-tabs a:focus {
-            color: linear-gradient(141.55deg, #6fd943 3.46%, #6fd943 99.86%), #6fd943 !important;
+            color: linear-gradient(141.55deg, #f5d7d7 3.46%, #f5d7d7 99.86%), #f5d7d7 !important;
         }
 
         .m-header svg {
-            color: #6fd943 !important;
+            color: #f5d7d7 !important;
         }
 
         .active-tab {
-            border-bottom: 2px solid #6fd943 !important;
+            border-bottom: 2px solid #f5d7d7 !important;
         }
 
         .messenger-infoView nav a {
 
-            color: linear-gradient(141.55deg, #6fd943 3.46%, #6fd943 99.86%), #6fd943 !important;
+            color: linear-gradient(141.55deg, #f5d7d7 3.46%, #f5d7d7 99.86%), #f5d7d7 !important;
         }
 
         .lastMessageIndicator {
-            color: #6fd943 !important;
+            color: #f5d7d7 !important;
         }
 
         .messenger-list-item td span .lastMessageIndicator {
 
-            color: #6fd943 !important;
+            color: #f5d7d7 !important;
             font-weight: bold;
         }
 
         .messenger-sendCard button svg {
-            color: #6fd943 !important;
+            color: #f5d7d7 !important;
         }
 
         .messenger-list-item.m-list-active td span .lastMessageIndicator {
@@ -779,7 +779,7 @@
         </div>
     </div>
 
-</div>
+    </div>
 @endsection
 
 @include('Chatify::layouts.modals')

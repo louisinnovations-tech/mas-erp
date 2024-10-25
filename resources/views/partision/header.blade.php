@@ -181,7 +181,17 @@
                         <i class="ti ti-chevron-down drp-arrow nocolor"></i>
                     </a>
                     <div class="dropdown-menu dash-h-dropdown dropdown-menu-end " aria-labelledby="dropdownLanguage">
-                        @foreach ($languages as $code => $lang)
+                        {{-- @foreach ($languages as $code => $lang)
+                            <a href="{{ route('change.language', $code) }}"
+                                class="dropdown-item {{ $currantLang == $code ? 'text-danger' : '' }}">
+                                {{ Str::upper($lang) }}
+                            </a>
+                        @endforeach --}}
+                        @php
+                            $allowedLanguages = ['en' => 'English', 'ar' => 'Arabic', 'fr' => 'French'];
+                        @endphp
+
+                        @foreach ($allowedLanguages as $code => $lang)
                             <a href="{{ route('change.language', $code) }}"
                                 class="dropdown-item {{ $currantLang == $code ? 'text-danger' : '' }}">
                                 {{ Str::upper($lang) }}

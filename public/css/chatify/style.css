@@ -2,8 +2,9 @@ html,
 body {
     margin: 0;
     padding: 0;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-        Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+        sans-serif;
 }
 
 :root {
@@ -63,7 +64,9 @@ body {
     display: none;
     background: rgba(0, 0, 0, 0.76);
     position: absolute;
-    bottom: calc(-100% + (var(--headers-padding) + var(--headers-padding)) - 8px);
+    bottom: calc(
+        -100% + (var(--headers-padding) + var(--headers-padding)) - 8px
+    );
     /* 8px = 4px padding-top + 4px padding-bottom */
     left: 0;
     right: 0;
@@ -131,7 +134,7 @@ body {
     height: var(--listView-header-height);
 }
 
-.messenger-listView .m-header>nav {
+.messenger-listView .m-header > nav {
     padding: var(--headers-padding);
 }
 
@@ -274,7 +277,7 @@ body {
 .m-list-active,
 .m-list-active:hover,
 .m-list-active:focus {
-    background: #6FD943;
+    background: #f5d7d7;
 }
 
 .m-list-active b {
@@ -292,7 +295,7 @@ body {
     text-align: left;
 }
 
-.messenger-list-item tr>td:first-child {
+.messenger-list-item tr > td:first-child {
     padding-right: 0;
     width: 55px;
 }
@@ -359,12 +362,12 @@ body {
     justify-content: center;
 }
 
-.saved-messages.avatar>svg {
+.saved-messages.avatar > svg {
     font-size: 22px;
     color: var(--primary-color);
 }
 
-.messenger-list-item.m-list-active .saved-messages.avatar>svg {
+.messenger-list-item.m-list-active .saved-messages.avatar > svg {
     color: #fff;
 }
 
@@ -378,14 +381,14 @@ body {
     white-space: nowrap;
 }
 
-.messenger-favorites>div {
+.messenger-favorites > div {
     display: inline-block;
     text-align: center;
     transition: transform 0.3s;
     cursor: pointer;
 }
 
-.messenger-favorites>div p {
+.messenger-favorites > div p {
     font-size: 12px;
     margin: 8px 0px;
     margin-bottom: 0px;
@@ -395,10 +398,9 @@ body {
     border: 2px solid #fff;
     margin: 0px 4px;
     box-shadow: 0px 0px 0px 2px var(--primary-color);
-
 }
 
-.messenger-favorites>div:active {
+.messenger-favorites > div:active {
     transform: scale(0.9);
 }
 
@@ -412,7 +414,7 @@ body {
     z-index: 1;
 }
 
-.messenger-title>span {
+.messenger-title > span {
     position: relative;
     padding: 0px 10px;
     z-index: 1;
@@ -450,13 +452,13 @@ body {
     font-size: var(--icon-size);
 }
 
-.messenger-infoView>div {
+.messenger-infoView > div {
     margin: auto;
     margin-top: 8%;
     text-align: center;
 }
 
-.messenger-infoView>p {
+.messenger-infoView > p {
     text-align: center;
     margin: auto;
     margin-top: 15px;
@@ -548,21 +550,23 @@ body {
     position: relative;
 }
 
-.message-card .image-wrapper .image-file>div {
+.message-card .image-wrapper .image-file > div {
     display: none;
     position: absolute;
     bottom: 0;
     right: 0;
     left: 0;
-    background: linear-gradient(0deg,
-            rgba(0, 0, 0, 1) 0%,
-            rgba(0, 0, 0, 0.5) 100%);
+    background: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 0.5) 100%
+    );
     padding: 0.5rem;
     font-size: 11px;
     color: #fff;
 }
 
-.message-card-content:hover .image-wrapper .image-file>div {
+.message-card-content:hover .image-wrapper .image-file > div {
     display: block;
 }
 
@@ -601,7 +605,7 @@ body {
 .message-card.mc-sender .message {
     direction: ltr;
     color: rgb(250, 247, 247) !important;
-    background:#6fd943 !important;
+    background: #f5d7d7 !important;
 }
 
 .message-card.mc-sender .message .message-time {
@@ -691,14 +695,14 @@ body {
     padding: 10px;
 }
 
-.attachment-preview>p {
+.attachment-preview > p {
     margin: 0;
     font-size: 12px;
     padding: 0px;
     padding-top: 10px;
 }
 
-.attachment-preview>p>svg {
+.attachment-preview > p > svg {
     font-size: 16px;
     margin: 0;
     margin-bottom: -1px;
@@ -724,7 +728,7 @@ body {
     background-position: center center;
 }
 
-.attachment-preview>svg:first-child {
+.attachment-preview > svg:first-child {
     position: absolute;
     background: rgba(0, 0, 0, 0.33);
     width: 20px;
@@ -737,7 +741,7 @@ body {
     color: #fff;
 }
 
-#message-form>button {
+#message-form > button {
     height: 40px;
 }
 

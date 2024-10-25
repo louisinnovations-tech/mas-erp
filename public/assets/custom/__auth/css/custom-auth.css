@@ -165,7 +165,7 @@
 
 .custom-login .form-control:focus {
     border-color: var(--bs-green);
-    box-shadow: 0 0 0 0.2rem rgba(12, 175, 96, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(235, 179, 179, 0.25);
 }
 
 .custom-login .form-check-input:checked {
@@ -207,16 +207,16 @@ body .custom-login .dash-header .drp-language .drp-text {
     background-size: 10px;
     background-repeat: no-repeat;
     background-position: center center;
-    -webkit-transition: all ease-in-out .5s;
-    -moz-transition: all ease-in-out .5s;
-    -ms-transition: all ease-in-out .5s;
-    -o-transition: all ease-in-out .5s;
-    transition: all ease-in-out .5s;
+    -webkit-transition: all ease-in-out 0.5s;
+    -moz-transition: all ease-in-out 0.5s;
+    -ms-transition: all ease-in-out 0.5s;
+    -o-transition: all ease-in-out 0.5s;
+    transition: all ease-in-out 0.5s;
     border: 0;
 }
 
 .custom-login .drp-language .btn {
-    background: #F5F5F5;
+    background: #f5f5f5;
     border-radius: 6px;
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
@@ -227,7 +227,7 @@ body .custom-login .dash-header .drp-language .drp-text {
 }
 
 .custom-login .drp-language .btn.show {
-    border-color: #F5F5F5;
+    border-color: #f5f5f5;
 }
 
 .custom-login .custom-img img {
@@ -240,7 +240,6 @@ body .custom-login .dash-header .drp-language .drp-text {
 .custom-login .card {
     margin-bottom: 0;
     background-color: transparent;
-
 }
 .custom-login .drp-language .dropdown-menu {
     max-height: 500px;
@@ -248,25 +247,23 @@ body .custom-login .dash-header .drp-language .drp-text {
 }
 ::-webkit-scrollbar {
     width: 3px;
-  }
-  
-  ::-webkit-scrollbar-track {
-    background: #F5F5F5; 
-    border-radius: 10px;
-  }
-   
-  ::-webkit-scrollbar-thumb {
-    background: black; 
-    border-radius: 10px;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background: #F5F5F5; 
-  }
+}
 
+::-webkit-scrollbar-track {
+    background: #f5f5f5;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: black;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #f5f5f5;
+}
 
 @media only screen and (max-width: 1199px) {
-
     .custom-login .custom-img,
     .custom-login .bg-login {
         display: none;
@@ -275,12 +272,9 @@ body .custom-login .dash-header .drp-language .drp-text {
     .custom-login .custom-wrapper .card .card-body {
         margin: auto;
     }
-
-   
 }
 
 @media only screen and (max-width: 991px) {
-
     .custom-login .navbar .nav-link {
         padding: 0px 15px;
     }

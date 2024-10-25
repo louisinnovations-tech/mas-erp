@@ -8,14 +8,11 @@
 
     $SITE_RTL = $settings['SITE_RTL'];
     $color = !empty($settings['color']) ? $settings['color'] : 'theme-1';
-    if(isset($settings['color_flag']) && $settings['color_flag'] == 'true')
-    {
+    if (isset($settings['color_flag']) && $settings['color_flag'] == 'true') {
         $themeColor = 'custom-color';
-    }
-    else {
+    } else {
         $themeColor = $color;
     }
-
 
     $SITE_RTL = 'off';
     if (!empty($settings['SITE_RTL'])) {
@@ -28,7 +25,7 @@
     $company_logos = $settings['company_logo_light'] ?? '';
 
     $lang = \App::getLocale('lang');
-    if($lang == 'ar' || $lang == 'he'){
+    if ($lang == 'ar' || $lang == 'he') {
         $SITE_RTL = 'on';
     }
 @endphp
@@ -44,7 +41,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>
-        {{ Utility::getValByName('title_text') ? Utility::getValByName('title_text') : config('app.name', 'AdvocateGo-SaaS') }}
+        {{ Utility::getValByName('title_text') ? Utility::getValByName('title_text') : config('app.name', 'Mas-ERP') }}
         - @yield('page-title') </title>
 
     <!-- Primary Meta Tags -->
@@ -113,6 +110,33 @@
         :root {
             --color-customColor: <?=$color ?>;
         }
+
+        .brand-logo-nav {
+            height: 45px;
+            width: auto;
+        }
+
+        @media (min-width: 992px) {
+            .brand-logo-nav {
+                height: 55px;
+            }
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            flex: 1;
+            text-align: center;
+            margin-left: 88.05px;
+        }
+
+        .navbar-expand-md li {
+            list-style-type: none;
+        }
     </style>
 </head>
 
@@ -120,40 +144,43 @@
 
     <div class="custom-login">
         <!-- <div class="login-bg-img">
-            <img src="{{ asset('assets/images/auth/'.$color.'.svg') }}" class="login-bg-1">
+            <img src="{{ asset('assets/images/auth/' . $color . '.svg') }}" class="login-bg-1">
             <img src="{{ asset('assets/images/auth/common.svg') }}" class="login-bg-2">
         </div>
         <div class="bg-login bg-primary"></div> -->
 
         <div class="custom-login-inner">
             <header class="dash-login-header">
-                <nav class="navbar navbar-expand-md default">
+                <nav class="navbar navbar-expand-md default py-2">
                     <div class="container">
-                        <div class="navbar-brand">
+                        <div class="navbar-brand py-0">
                             <a href="#">
                                 @if ($settings['cust_darklayout'] && $settings['cust_darklayout'] == 'on')
                                     <img src="{{ $logo . '/' . (isset($company_logos) && !empty($company_logos) ? $company_logos : 'logo-dark.png') . '?' . time() }}"
-                                        alt="{{ config('app.name', 'AdvocateGo-SaaS') }}" class="logo "
-                                        style="height: 30px; width: 180px;" loading="lazy">
+                                        alt="{{ config('app.name', 'Mas-ERP') }}" class="logo brand-logo-nav"
+                                        loading="lazy">
                                 @else
-                                    <img src="{{ $logo . '/' . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-dark.png') . '?' . time() }}"
-                                        alt="{{ config('app.name', 'AdvocateGo-SaaS') }}" class="logo "
-                                        style="height: 30px; width: 180px;" loading="lazy">
+                                    <img src="{{ $logo . '/' . (isset($company_logo) && !empty($company_logo) ? $company_logo : '/assets/images/mashael.png') . '?' . time() }}"
+                                        alt="{{ config('app.name', 'Mas-ERP') }}" class="logo brand-logo-nav"
+                                        loading="lazy">
                                 @endif
                             </a>
                         </div>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        @yield('language-bar')
+                        {{-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarlogin">
                             <span class="navbar-toggler-icon"></span>
                         </button>
-                        <div class="collapse navbar-collapse" id="navbarlogin">
+                         --}}
+
+                        {{-- <div class="collapse navbar-collapse" id="navbarlogin">
                             <ul class="navbar-nav align-items-center ms-auto mb-2 mb-lg-0">
                                 <!-- <li class="nav-item">
                                     @include('landingpage::layouts.buttons')
                                 </li> -->
                                 @yield('language-bar')
                             </ul>
-                        </div>
+                        </div> --}}
                     </div>
                 </nav>
             </header>
