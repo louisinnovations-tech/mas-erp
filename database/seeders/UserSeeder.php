@@ -283,8 +283,8 @@ class UserSeeder extends Seeder
         $company = User::create(
             [
                 'name' => 'Company',
-                'email' => 'company@example.com',
-                'password' => Hash::make('1234'),
+                'email' => 'info@louis-innovations.com',
+                'password' => Hash::make('123456'),
                 'type' => 'company',
                 'lang' => 'en',
                 'plan' => 1,
@@ -302,173 +302,173 @@ class UserSeeder extends Seeder
         $company->assignRole($companyRole);
 
 
-        // advocate
-        $advocateRole = Role::create(
-            [
-                'name' => 'advocate',
-                'created_by' => $company->id,
-            ]
-        );
+        // // advocate
+        // $advocateRole = Role::create(
+        //     [
+        //         'name' => 'advocate',
+        //         'created_by' => $company->id,
+        //     ]
+        // );
 
-        $advocatePermissions = [
-            ["name" => "show dashboard"],
+        // $advocatePermissions = [
+        //     ["name" => "show dashboard"],
 
-            ["name" => "view advocate"],
+        //     ["name" => "view advocate"],
 
-            ["name" => "manage appointment"],
-            ["name" => "create appointment"],
-            ["name" => "edit appointment"],
-            ["name" => "delete appointment"],
+        //     ["name" => "manage appointment"],
+        //     ["name" => "create appointment"],
+        //     ["name" => "edit appointment"],
+        //     ["name" => "delete appointment"],
 
-            ["name" => "manage doctype"],
-            ["name" => "create doctype"],
+        //     ["name" => "manage doctype"],
+        //     ["name" => "create doctype"],
 
-            ["name" => "show group"],
-            ["name" => "manage group"],
+        //     ["name" => "show group"],
+        //     ["name" => "manage group"],
 
-            ["name" => "show member"],
+        //     ["name" => "show member"],
 
-            ["name" => "manage case"],
-            ["name" => "create case"],
-            ["name" => "edit case"],
-            ["name" => "view case"],
+        //     ["name" => "manage case"],
+        //     ["name" => "create case"],
+        //     ["name" => "edit case"],
+        //     ["name" => "view case"],
 
-            ["name" => "create todo"],
-            ["name" => "edit todo"],
-            ["name" => "view todo"],
-            ["name" => "delete todo"],
-            ["name" => "manage todo"],
+        //     ["name" => "create todo"],
+        //     ["name" => "edit todo"],
+        //     ["name" => "view todo"],
+        //     ["name" => "delete todo"],
+        //     ["name" => "manage todo"],
 
-            ["name" => "manage cause"],
-            ["name" => "create cause"],
-            ["name" => "delete cause"],
-            ["name" => "edit cause"],
+        //     ["name" => "manage cause"],
+        //     ["name" => "create cause"],
+        //     ["name" => "delete cause"],
+        //     ["name" => "edit cause"],
 
-            ["name" => "manage timesheet"],
-            ["name" => "create timesheet"],
-            ["name" => "edit timesheet"],
-            ["name" => "view timesheet"],
+        //     ["name" => "manage timesheet"],
+        //     ["name" => "create timesheet"],
+        //     ["name" => "edit timesheet"],
+        //     ["name" => "view timesheet"],
 
-            ["name" => "manage expense"],
-            ["name" => "create expense"],
-            ["name" => "view expense"],
+        //     ["name" => "manage expense"],
+        //     ["name" => "create expense"],
+        //     ["name" => "view expense"],
 
-            ["name" => "view calendar"],
+        //     ["name" => "view calendar"],
 
-            ["name" => "manage diary"],
+        //     ["name" => "manage diary"],
 
-        ];
+        // ];
 
-        $advocateRole->givePermissionTo($advocatePermissions);
+        // $advocateRole->givePermissionTo($advocatePermissions);
 
-        $advocate = User::create(
-            [
-                'name' => 'Advocate',
-                'email' => 'advocate@example.com',
-                'password' => Hash::make('1234'),
-                'type' => 'advocate',
-                'lang' => 'en',
-                'avatar' => '',
-                'created_by' => $company->id,
-                'email_verified_at' => now(),
-                'is_enable_login' => 1,
+        // $advocate = User::create(
+        //     [
+        //         'name' => 'Advocate',
+        //         'email' => 'advocate@example.com',
+        //         'password' => Hash::make('1234'),
+        //         'type' => 'advocate',
+        //         'lang' => 'en',
+        //         'avatar' => '',
+        //         'created_by' => $company->id,
+        //         'email_verified_at' => now(),
+        //         'is_enable_login' => 1,
 
-            ]
-        );
+        //     ]
+        // );
 
-        $detail = new UserDetail();
-        $detail->user_id = $advocate->id;
-        $detail->save();
+        // $detail = new UserDetail();
+        // $detail->user_id = $advocate->id;
+        // $detail->save();
 
-        // advocate table insert
-        $addAdvocate = new Advocate();
-        $addAdvocate['user_id']  = $advocate->id;
-        $addAdvocate['created_by']  = $company->id;
-        $addAdvocate->save();
+        // // advocate table insert
+        // $addAdvocate = new Advocate();
+        // $addAdvocate['user_id']  = $advocate->id;
+        // $addAdvocate['created_by']  = $company->id;
+        // $addAdvocate->save();
 
 
-        $advocate->assignRole($advocateRole);
+        // $advocate->assignRole($advocateRole);
 
-        // client
-        $clientRole = Role::create(
-            [
-                'name' => 'client',
-                'created_by' => $company->id,
-            ]
-        );
+        // // client
+        // $clientRole = Role::create(
+        //     [
+        //         'name' => 'client',
+        //         'created_by' => $company->id,
+        //     ]
+        // );
 
-        $clientPermissions = [
-            ["name" => "show dashboard"],
+        // $clientPermissions = [
+        //     ["name" => "show dashboard"],
 
-            ["name" => "show group"],
-            ["name" => "manage group"],
+        //     ["name" => "show group"],
+        //     ["name" => "manage group"],
 
-            ["name" => "manage case"],
-            ["name" => "view case"],
+        //     ["name" => "manage case"],
+        //     ["name" => "view case"],
 
-            ["name" => "create todo"],
-            ["name" => "edit todo"],
-            ["name" => "view todo"],
-            ["name" => "delete todo"],
-            ["name" => "manage todo"],
+        //     ["name" => "create todo"],
+        //     ["name" => "edit todo"],
+        //     ["name" => "view todo"],
+        //     ["name" => "delete todo"],
+        //     ["name" => "manage todo"],
 
-            ["name" => "manage bill"],
-            ["name" => "create bill"],
-            ["name" => "edit bill"],
-            ["name" => "delete bill"],
-            ["name" => "view bill"],
+        //     ["name" => "manage bill"],
+        //     ["name" => "create bill"],
+        //     ["name" => "edit bill"],
+        //     ["name" => "delete bill"],
+        //     ["name" => "view bill"],
 
-            ["name" => "manage diary"],
+        //     ["name" => "manage diary"],
 
-            ["name" => "manage timesheet"],
-            ["name" => "create timesheet"],
-            ["name" => "edit timesheet"],
-            ["name" => "delete timesheet"],
-            ["name" => "view timesheet"],
+        //     ["name" => "manage timesheet"],
+        //     ["name" => "create timesheet"],
+        //     ["name" => "edit timesheet"],
+        //     ["name" => "delete timesheet"],
+        //     ["name" => "view timesheet"],
 
-            ["name" => "manage expense"],
-            ["name" => "create expense"],
-            ["name" => "edit expense"],
-            ["name" => "delete expense"],
-            ["name" => "view expense"],
+        //     ["name" => "manage expense"],
+        //     ["name" => "create expense"],
+        //     ["name" => "edit expense"],
+        //     ["name" => "delete expense"],
+        //     ["name" => "view expense"],
 
-            ["name" => "manage feereceived"],
-            ["name" => "create feereceived"],
-            ["name" => "edit feereceived"],
-            ["name" => "delete feereceived"],
-            ["name" => "view feereceived"],
+        //     ["name" => "manage feereceived"],
+        //     ["name" => "create feereceived"],
+        //     ["name" => "edit feereceived"],
+        //     ["name" => "delete feereceived"],
+        //     ["name" => "view feereceived"],
 
-            ["name" => "view calendar"],
+        //     ["name" => "view calendar"],
 
-            ["name" => "manage appointment"],
-            ["name" => "create appointment"],
-            ["name" => "edit appointment"],
-            ["name" => "delete appointment"],
+        //     ["name" => "manage appointment"],
+        //     ["name" => "create appointment"],
+        //     ["name" => "edit appointment"],
+        //     ["name" => "delete appointment"],
 
-        ];
+        // ];
 
-        $clientRole->givePermissionTo($clientPermissions);
+        // $clientRole->givePermissionTo($clientPermissions);
 
-        $client = User::create(
-            [
-                'name' => 'Client',
-                'email' => 'client@example.com',
-                'password' => Hash::make('1234'),
-                'type' => 'client',
-                'lang' => 'en',
-                'avatar' => '',
-                'created_by' => $company->id,
-                'email_verified_at' => now(),
-                'is_enable_login' => 1,
+        // $client = User::create(
+        //     [
+        //         'name' => 'Client',
+        //         'email' => 'client@example.com',
+        //         'password' => Hash::make('1234'),
+        //         'type' => 'client',
+        //         'lang' => 'en',
+        //         'avatar' => '',
+        //         'created_by' => $company->id,
+        //         'email_verified_at' => now(),
+        //         'is_enable_login' => 1,
 
-            ]
-        );
+        //     ]
+        // );
 
-        $detail = new UserDetail();
-        $detail->user_id = $client->id;
-        $detail->save();
+        // $detail = new UserDetail();
+        // $detail->user_id = $client->id;
+        // $detail->save();
 
-        $client->assignRole($clientRole);
+        // $client->assignRole($clientRole);
 
         Utility::languagecreate();
 
