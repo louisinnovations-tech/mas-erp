@@ -282,7 +282,7 @@ class UserSeeder extends Seeder
 
         $company = User::create(
             [
-                'name' => 'Company',
+                'name' => 'Louis Innovations',
                 'email' => 'info@louis-innovations.com',
                 'password' => Hash::make('123456'),
                 'type' => 'company',
