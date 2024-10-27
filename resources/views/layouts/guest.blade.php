@@ -134,6 +134,12 @@
             margin-left: 88.05px;
         }
 
+        @media (max-width: 383px) {
+            .navbar-brand {
+                margin-left: 0;
+            }
+        }
+
         .navbar-expand-md li {
             list-style-type: none;
         }
