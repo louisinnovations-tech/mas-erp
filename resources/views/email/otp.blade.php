@@ -84,7 +84,7 @@
         <!-- Header -->
         <div class="header">
             <h1>MAS ERP</h1>
-            <p>Marshela Alsuti Law Firm</p>
+            <p>Mashael Alsulaiti Law Firm</p>
         </div>
 
         <!-- Content -->
