@@ -122,26 +122,61 @@
             }
         }
 
-        .navbar {
+        .container {
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
         }
 
         .navbar-brand {
-            flex: 1;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
             text-align: center;
-            margin-left: 88.05px;
         }
 
-        @media (max-width: 383px) {
-            .navbar-brand {
-                margin-left: 0;
-            }
+        .spacer {
+            position: absolute;
+            left: 0;
+        }
+
+        .nav-area-left {
+            margin-left: auto
         }
 
         .navbar-expand-md li {
             list-style-type: none;
+        }
+
+        .drp-text-full {
+            display: inline;
+        }
+
+        .drp-text-short {
+            display: none;
+        }
+
+        @media (max-width: 767px) {
+            .drp-text-full {
+                display: none;
+            }
+
+            .drp-text-short {
+                display: inline;
+                font-size: 12px;
+            }
+
+            .custom-login .drp-language .btn {
+
+                margin: 0;
+                padding: 6px 24px 6px 6px;
+            }
+
+            .custom-login .dropdown-toggle::after {
+                top: 13px;
+            }
+
         }
     </style>
 </head>
@@ -159,6 +194,8 @@
             <header class="dash-login-header">
                 <nav class="navbar navbar-expand-md default py-2">
                     <div class="container">
+
+                        <div class="spacer"></div>
                         <div class="navbar-brand py-0">
                             <a href="#">
                                 @if ($settings['cust_darklayout'] && $settings['cust_darklayout'] == 'on')
@@ -166,20 +203,23 @@
                                         alt="{{ config('app.name', 'Mas-ERP') }}" class="logo brand-logo-nav"
                                         loading="lazy">
                                 @else
-                                    <img src="{{ $logo . '/' . (isset($company_logo) && !empty($company_logo) ? $company_logo : '/assets/images/mashael.png') . '?' . time() }}"
+                                    <img src="/assets/images/mashael.png" alt="{{ config('app.name', 'Mas-ERP') }}"
+                                        class="logo brand-logo-nav" loading="lazy">
+                                    {{-- <img src="{{ $logo . '/' . (isset($company_logo) && !empty($company_logo) ? $company_logo : '/assets/images/mashael.png') . '?' . time() }}"
                                         alt="{{ config('app.name', 'Mas-ERP') }}" class="logo brand-logo-nav"
-                                        loading="lazy">
+                                        loading="lazy"> --}}
                                 @endif
                             </a>
                         </div>
-                        @yield('language-bar')
-                        {{-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        <div class="nav-area-left">
+                            @yield('language-bar')
+                            {{-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarlogin">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                          --}}
 
-                        {{-- <div class="collapse navbar-collapse" id="navbarlogin">
+                            {{-- <div class="collapse navbar-collapse" id="navbarlogin">
                             <ul class="navbar-nav align-items-center ms-auto mb-2 mb-lg-0">
                                 <!-- <li class="nav-item">
                                     @include('landingpage::layouts.buttons')
@@ -187,6 +227,7 @@
                                 @yield('language-bar')
                             </ul>
                         </div> --}}
+                        </div>
                     </div>
                 </nav>
             </header>
@@ -202,9 +243,11 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-12">
-                                <span>&copy; {{ __('Copyright') }}
-                                    {{ $settings['footer_text'] ? $settings['footer_text'] : config('app.name', 'AdvocateGo') }}
-                                    {{ date('Y') }}</span>
+                                <a target="_blank" href="https://www.mas.com.qa/">
+                                    <span>&copy; {{ __('Copyright') }}
+                                        {{ $settings['footer_text'] ? $settings['footer_text'] : config('app.name', 'MAS ERP System') }}
+                                        {{ date('Y') }}</span>
+                                </a>
                             </div>
                         </div>
                     </div>

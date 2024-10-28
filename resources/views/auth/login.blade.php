@@ -23,7 +23,10 @@
     <div class="lang-dropdown-only-desk">
         <li class="dropdown dash-h-item drp-language">
             <a class="dash-head-link dropdown-toggle btn" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                <span class="drp-text">{{ ucFirst($languages[$lang]) }}</span>
+                <span class="drp-text-full">{{ ucFirst($languages[$lang]) }}</span>
+                <span class="drp-text-short">{{ substr(ucFirst($languages[$lang]), 0, 2) }}</span>
+
+
             </a>
             <div class="dropdown-menu dash-h-dropdown dropdown-menu-end">
                 @foreach ($languages as $code => $language)
