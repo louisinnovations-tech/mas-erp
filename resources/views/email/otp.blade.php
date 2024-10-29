@@ -91,7 +91,7 @@
         <div class="content">
             <p>Hello,</p>
             <p>To complete your login, please use the following OTP code:</p>
-            <div class="otp-code">1234567</div>
+            <div class="otp-code">{{ $otp }}</div>
             <p>
                 This code is valid for the next 10 minutes. Do not share it with
                 anyone.
