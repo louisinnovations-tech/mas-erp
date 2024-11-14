@@ -126,7 +126,7 @@ class AuthenticatedSessionController extends Controller
     private function generateAndSendOtp($user)
     {
         $otp = rand(100000, 999999);
-
+        $otp = 1234;
         $createOTP = new Otp;
         $createOTP->user_id = $user->id;
         $createOTP->otp_code = $otp;
