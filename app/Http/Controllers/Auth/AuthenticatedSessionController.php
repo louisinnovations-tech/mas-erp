@@ -67,7 +67,12 @@ class AuthenticatedSessionController extends Controller
 
         if($user != null && $user->is_enable_login == 0 && $user->type != 'company')
         {
-            return redirect()->back()->with('status', __('Your Account is disable from company.'));
+            return response()->json([
+                'errors' => [
+                   'email' => [__('Your Account is disabled from company.')]
+                ]
+            ], 422);  
+            // return redirect()->back()->with('status', __('Your Account is disable from company.'));
         }
         $settings = Utility::settings();
 
@@ -136,7 +141,6 @@ class AuthenticatedSessionController extends Controller
         try {
             Mail::to($email)->send(new OtpMail($otp));
         } catch (\Exception $e) {
-            // dd($e);
             \Log::error('Failed to send OTP email: ' . $e->getMessage());
         }
     }
