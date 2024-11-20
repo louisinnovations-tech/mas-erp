@@ -99,7 +99,7 @@ class AdvocateController extends Controller
                     'type' => 'advocate',
                     'lang' => 'en',
                     'avatar' => '',
-                    'created_by' => Auth::user()->creatorId(),
+                    'created_by' => $user->creatorId(),
                     'email_verified_at' => now(),
                 ]
             );
@@ -128,7 +128,7 @@ class AdvocateController extends Controller
             $advocate['nationality']         = $request->nationality;
             $advocate['languages']         = $request->languages;
             $advocate->practice_areas = json_encode($request->practice_areas);
-            $advocate['created_by']           = Auth::user()->creatorId();
+            $advocate['created_by']           = $user->creatorId();
             $advocate->save();
 
 
@@ -185,7 +185,8 @@ class AdvocateController extends Controller
             if($advocate){
                 $userAdd = User::where('email',$advocate->email)->first();
                 $contacts = PointOfContacts::where('advocate_id',$advocate->id)->get();
-                return view('advocate.edit',compact('advocate','contacts','userAdd'));
+                $practiceAreas = PracticeArea::pluck('name', 'id');
+                return view('advocate.edit',compact('advocate','contacts','userAdd', 'practiceAreas'));
             }else{
 
                 return redirect()->back()->with('error', __('Advocate not found.'));
@@ -233,7 +234,6 @@ class AdvocateController extends Controller
                 }
             }
 
-
             $advocate['phone_number']         = $request->phone_number;
             $advocate['age']                  = $request->age;
             $advocate['company_name']         = $request->company_name;
@@ -250,6 +250,11 @@ class AdvocateController extends Controller
             $advocate['home_state'] = $request->home_state;
             $advocate['home_city'] = $request->home_city;
             $advocate['home_zip_code'] = $request->home_zip_code;
+            $advocate['department']           = $request->department;
+            $advocate['profile_link']         = $request->profile_link;
+            $advocate['nationality']         = $request->nationality;
+            $advocate['languages']         = $request->languages;
+            $advocate->practice_areas = json_encode($request->practice_areas);
             $advocate->save();
 
             $userAdd->name = $request->name;

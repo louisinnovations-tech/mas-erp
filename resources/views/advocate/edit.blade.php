@@ -19,10 +19,10 @@
             <div class="card shadow-none rounded-0 border">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-12 col-sm-6 ">
+                        <div class="col-md-6 col-sm-6 ">
                             <div class="form-group">
 
-                            {{ Form::label('name', __('Firm/Advocate Name'), ['class' => 'col-form-label']) }}
+                            {{ Form::label('name', __('Advocate Name'), ['class' => 'col-form-label']) }}
                             {{ Form::text('name',$advocate->getAdvUser->name, ['class' => 'form-control', 'required' => 'required']) }}
                         </div>
                     </div>
@@ -38,36 +38,53 @@
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group">
                             {{ Form::label('phone_number', __('Phone Number'), ['class' => 'col-form-label']) }}
-                            {{ Form::text('phone_number', null, ['class' => 'form-control','required' => 'required']) }}
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        <div class="form-group">
-                            {{ Form::label('age', __('Age'), ['class' => 'col-form-label']) }}
-                            {{ Form::number('age', null, ['class' => 'form-control']) }}
+                            {{ Form::text('phone_number', $advocate->getAdvUser->phone_number, ['class' => 'form-control','required' => 'required']) }}
                         </div>
                     </div>
 
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         <div class="form-group">
                             {{ Form::label('company_name', __('Company Name'), ['class' => 'col-form-label']) }}
-                            {{ Form::text('company_name', null, ['class' => 'form-control']) }}
+                            {{ Form::text('company_name', $advocate->company_name, ['class' => 'form-control']) }}
                         </div>
                     </div>
 
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         <div class="form-group">
-                            {!! Form::label('bank_details', __('Bank Details'), ['class' => 'col-form-label']) !!}
-                            {!! Form::textarea('bank_details', null ,[ 'class' => 'form-control', 'rows' => '1' ]) !!}
-
+                            {{ Form::label('department', __('Department'), ['class' => 'col-form-label']) }}
+                            {{ Form::text('department', $advocate->department, ['class' => 'form-control']) }}
                         </div>
-                        <small class="text-xs">
-                            {{ __('Example : Bank : Bank Name <br> Account Number : 0000 0000 <br>') }}.
-                        </small>
                     </div>
 
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                            {{ Form::label('profile_link', __('Professional Profile link'), ['class' => 'col-form-label']) }}
+                            {{ Form::url('profile_link', $advocate->profile_link, ['class' => 'form-control']) }}
+                        </div>
+                    </div>
 
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                            {{ Form::label('nationality', __('Nationality'), ['class' => 'col-form-label']) }}
+                            {{ Form::text('nationality', $advocate->nationality, ['class' => 'form-control']) }}
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                            {{ Form::label('languages', __('Languages'), ['class' => 'col-form-label']) }}
+                            {{ Form::text('languages', $advocate->languages, ['class' => 'form-control']) }}
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 mt-2">
+                        <div class="form-group">
+                            {!! Form::label('practice_areas', __('Practice Areas'), ['class' => 'form-label']) !!}
+                            {!! Form::select('practice_areas[]', $practiceAreas, json_decode($advocate->practice_areas), [
+                                'class' => 'form-control multi-select',
+                                'id' => 'choices-multiple1',
+                                'multiple',
+                            ]) !!}
+                        </div>
+                    </div>
 
                     <div class="card-header">
                         <div class="row flex-grow-1">
@@ -76,48 +93,6 @@
                                     {{ __('Office Address') }}</h5>
                             </div>
                         </div>
-
-                        <div class="col-md-6 col-sm-6">
-                            <div class="form-group">
-                                {{ Form::label('email', __('Email Address'), ['class' => 'col-form-label']) }}
-                                {{ Form::text('email', $advocate->getAdvUser->email, ['class' => 'form-control']) }}
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-6 col-sm-6">
-                            <div class="form-group">
-                                {{ Form::label('phone_number', __('Phone Number'), ['class' => 'col-form-label']) }}
-                                {{ Form::text('phone_number', null, ['class' => 'form-control', 'required' => 'required']) }}
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <div class="form-group">
-                                {{ Form::label('age', __('Age'), ['class' => 'col-form-label']) }}
-                                {{ Form::number('age', null, ['class' => 'form-control']) }}
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <div class="form-group">
-                                {{ Form::label('company_name', __('Company Name'), ['class' => 'col-form-label']) }}
-                                {{ Form::text('company_name', null, ['class' => 'form-control']) }}
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <div class="form-group">
-                                {!! Form::label('bank_details', __('Bank Details'), ['class' => 'col-form-label']) !!}
-                                {!! Form::textarea('bank_details', null, ['class' => 'form-control', 'rows' => '1']) !!}
-
-                            </div>
-                            <small class="text-xs">
-                                {{ __('Example : Bank : Bank Name <br> Account Number : 0000 0000 <br>') }}.
-                            </small>
-                        </div>
-
-
 
                         <div class="card-header">
                             <div class="row flex-grow-1">

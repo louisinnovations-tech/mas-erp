@@ -18,9 +18,6 @@
                     <dt class="col-md-4"><span class="h6 text-md mb-0">{{ __('Company Name:') }}</span></dt>
                     <dd class="col-md-8"><span class="text-md">{{ $advocate->company_name }}</span></dd>
 
-                    <dt class="col-md-4"><span class="h6 text-md mb-0">{{ __('Bank Details:') }}</span></dt>
-                    <dd class="col-md-8"><span class="text-md">{!! $advocate->bank_details !!}</span></dd>
-
                     <div class="col-12">
                         <h5>{{ __('Office Address') }}</h5>
                         <hr class="mt-2 mb-2">
