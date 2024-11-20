@@ -52,9 +52,9 @@ class PracticeAreaController extends Controller
                 return redirect()->back()->with('error', $messages->first());
             }
 
-            $awardtype             = new PracticeArea();
-            $awardtype->name       = $request->name;
-            $awardtype->save();
+            $practiceArea             = new PracticeArea();
+            $practiceArea->name       = $request->name;
+            $practiceArea->save();
 
             return redirect()->route('practice-area.index')->with('success', __('PracticeArea  successfully created.'));
         }
@@ -112,16 +112,16 @@ class PracticeAreaController extends Controller
         if(\Auth::user()->type == 'company')
         {
             $practiceArea = PracticeArea::find($id);
-            $data      = Advocate::whereJsonContains('practice_areas', $practiceArea->id)->first();
-            if(!empty($data))
+            $isDataExists      = Advocate::whereJsonContains('practice_areas', $id)->exists();
+            if($isDataExists)
             {
-                return redirect()->back()->with('error', __('this practice area is already use so please transfer or delete this practice area related data.'));
+                return redirect()->back()->with('error', __('This practice area is already in use. So please transfer or delete this practice area related data.'));
             }
 
 
             $practiceArea->delete();
 
-            return redirect()->route('award-type.index')->with('success', __('AwardType successfully deleted.'));
+            return redirect()->route('practice-area.index')->with('success', __('Practice Area successfully deleted.'));
         }
         else
         {
