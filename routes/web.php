@@ -118,6 +118,7 @@ use App\Http\Controllers\PerformanceTypeController;
 use App\Http\Controllers\CompetenciesController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\GoalTypeController;
+use App\Http\Controllers\PracticeAreaController;
 use App\Http\Controllers\SalaryTypeController;
 use App\Models\User;
 
@@ -677,6 +678,14 @@ Route::resource('award', AwardController::class)->middleware(
 );
 
 Route::resource('award-type', AwardTypeController::class)->middleware(
+    [
+        'auth',
+        'XSS',
+        'revalidate',
+    ]
+);
+
+Route::resource('practice-area', PracticeAreaController::class)->middleware(
     [
         'auth',
         'XSS',

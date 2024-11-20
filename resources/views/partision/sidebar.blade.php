@@ -84,6 +84,25 @@
                                         </li>
                                     @endcan
 
+                                    @can('manage client')
+                                        <li
+                                            class="dash-item dash-hasmenu {{ in_array(Request::segment(1), ['client', 'client-list']) ? ' active' : '' }}">
+                                            <a href="{{ route('client.index') }}" class="dash-link">
+                                                <!-- <span class="dash-micon"><i class="ti ti-user-check"></i></span> -->
+                                                <span class="dash-mtext">{{ __('Client') }}</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+
+                                    @can('manage advocate')
+                                        <li class="dash-item dash-hasmenu {{ in_array(Request::segment(1), ['advocate']) ? ' active' : '' }}">
+                                            <a href="{{ route('advocate.index') }}" class="dash-link">
+                                                <!-- <span class="dash-micon"><i class="fa fa-tasks"></i></span> -->
+                                                <span class="dash-mtext">{{ __('Advocate') }}</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+
                                     @can('manage group')
                                         <li class="dash-item {{ in_array(Request::segment(1), ['groups', '']) ? ' active' : '' }}">
                                             <a class="dash-link" href="{{ route('groups.index') }}">{{ __('Group') }}</a>
@@ -117,25 +136,6 @@
 
                     </li>
                 @endif
-
-                @can('manage client')
-                    <li
-                        class="dash-item dash-hasmenu {{ in_array(Request::segment(1), ['client', 'client-list']) ? ' active' : '' }}">
-                        <a href="{{ route('client.index') }}" class="dash-link">
-                            <span class="dash-micon"><i class="ti ti-user-check"></i></span>
-                            <span class="dash-mtext">{{ __('Client') }}</span>
-                        </a>
-                    </li>
-                @endcan
-
-                @can('manage advocate')
-                    <li class="dash-item dash-hasmenu {{ in_array(Request::segment(1), ['advocate']) ? ' active' : '' }}">
-                        <a href="{{ route('advocate.index') }}" class="dash-link">
-                            <span class="dash-micon"><i class="fa fa-tasks"></i></span>
-                            <span class="dash-mtext">{{ __('Advocate') }}</span>
-                        </a>
-                    </li>
-                @endcan
 
                 @if (Auth::user()->type == 'client')
                     <li class="dash-item dash-hasmenu {{ Request::segment(1) == 'advocate' ? ' active' : '' }}">
@@ -638,6 +638,13 @@
                                 <li class="dash-item ">
                                     <a class="dash-link"
                                         href="{{ route('motions.index') }}">{{ __('Motions Types') }}</a>
+                                </li>
+                            @endcan
+
+                            @can('manage practice areas')
+                                <li class="dash-item ">
+                                    <a class="dash-link"
+                                        href="{{ route('practice-area.index') }}">{{ __('Practice Areas') }}</a>
                                 </li>
                             @endcan
 

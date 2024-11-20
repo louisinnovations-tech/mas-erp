@@ -149,6 +149,11 @@ class UserSeeder extends Seeder
             ['name' => 'manage crm', 'guard_name' => 'web', 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')],
             ['name' => 'manage support', 'guard_name' => 'web', 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')],
 
+            ['name' => 'manage practice areas', 'guard_name' => 'web'],
+            ['name' => 'create practice areas', 'guard_name' => 'web'],
+            ['name' => 'edit practice areas', 'guard_name' => 'web'],
+            ['name' => 'delete practice areas', 'guard_name' => 'web'],
+
         ];
 
         Permission::insert($permissions);
@@ -273,6 +278,10 @@ class UserSeeder extends Seeder
             ["name" => "manage crm"],
             ["name" => "manage support"],
 
+            ['name' => 'manage practice areas'],
+            ['name' => 'create practice areas'],
+            ['name' => 'edit practice areas'],
+            ['name' => 'delete practice areas'],
 
         ];
 
