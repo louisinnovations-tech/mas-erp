@@ -64,7 +64,6 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request)
     {
         $user = User::where('email',$request->email)->first();
-dd($user);
         if($user != null && $user->is_enable_login == 0)
         // if($user != null && $user->is_enable_login == 0 && $user->type != 'company')
         {
