@@ -135,6 +135,8 @@
         $(document).ready(function() {
             $('#loginForm').submit(function(e) {
                 e.preventDefault();
+                $('#login-email-error').text('');
+                $('#login-password-error').text('');
                 $.ajax({
                     url: "{{ route('login') }}",
                     method: "POST",
@@ -157,6 +159,7 @@
 
             $('#otpForm').submit(function(e) {
                 e.preventDefault();
+                $('#otp-error').text('')
                 $.ajax({
                     url: "{{ url('/verify-otp') }}",
                     method: "POST",
