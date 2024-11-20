@@ -33,6 +33,7 @@ class AdvocateController extends Controller
 
             $advocates = Advocate::where('created_by', Auth::user()->creatorId())
                 ->with('getAdvUser')
+                ->orderBy('created_at','desc')
                 ->get();
 
             return view('advocate.index', compact('advocates'));
@@ -101,6 +102,7 @@ class AdvocateController extends Controller
                     'avatar' => '',
                     'created_by' => $user->creatorId(),
                     'email_verified_at' => now(),
+                    'is_enable_login' => $request->password_switch == 'on'
                 ]
             );
             $new_user->assignRole('advocate');
@@ -260,6 +262,7 @@ class AdvocateController extends Controller
             $userAdd->name = $request->name;
             $userAdd->email = $request->email;
             $userAdd->referral_id = '#' . time();
+            $userAdd->is_enable_login = $request->password_switch == 'on';
             $userAdd->save();
 
             return redirect()->route('advocate.index')->with('success', __('Advocate successfully updated.'));
