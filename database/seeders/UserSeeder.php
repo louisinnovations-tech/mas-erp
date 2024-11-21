@@ -312,63 +312,63 @@ class UserSeeder extends Seeder
 
 
         // // advocate
-        // $advocateRole = Role::create(
-        //     [
-        //         'name' => 'advocate',
-        //         'created_by' => $company->id,
-        //     ]
-        // );
+        $advocateRole = Role::create(
+            [
+                'name' => 'advocate',
+                'created_by' => $company->id,
+            ]
+        );
 
-        // $advocatePermissions = [
-        //     ["name" => "show dashboard"],
+        $advocatePermissions = [
+            ["name" => "show dashboard"],
 
-        //     ["name" => "view advocate"],
+            ["name" => "view advocate"],
 
-        //     ["name" => "manage appointment"],
-        //     ["name" => "create appointment"],
-        //     ["name" => "edit appointment"],
-        //     ["name" => "delete appointment"],
+            ["name" => "manage appointment"],
+            ["name" => "create appointment"],
+            ["name" => "edit appointment"],
+            ["name" => "delete appointment"],
 
-        //     ["name" => "manage doctype"],
-        //     ["name" => "create doctype"],
+            ["name" => "manage doctype"],
+            ["name" => "create doctype"],
 
-        //     ["name" => "show group"],
-        //     ["name" => "manage group"],
+            ["name" => "show group"],
+            ["name" => "manage group"],
 
-        //     ["name" => "show member"],
+            ["name" => "show member"],
 
-        //     ["name" => "manage case"],
-        //     ["name" => "create case"],
-        //     ["name" => "edit case"],
-        //     ["name" => "view case"],
+            ["name" => "manage case"],
+            ["name" => "create case"],
+            ["name" => "edit case"],
+            ["name" => "view case"],
 
-        //     ["name" => "create todo"],
-        //     ["name" => "edit todo"],
-        //     ["name" => "view todo"],
-        //     ["name" => "delete todo"],
-        //     ["name" => "manage todo"],
+            ["name" => "create todo"],
+            ["name" => "edit todo"],
+            ["name" => "view todo"],
+            ["name" => "delete todo"],
+            ["name" => "manage todo"],
 
-        //     ["name" => "manage cause"],
-        //     ["name" => "create cause"],
-        //     ["name" => "delete cause"],
-        //     ["name" => "edit cause"],
+            ["name" => "manage cause"],
+            ["name" => "create cause"],
+            ["name" => "delete cause"],
+            ["name" => "edit cause"],
 
-        //     ["name" => "manage timesheet"],
-        //     ["name" => "create timesheet"],
-        //     ["name" => "edit timesheet"],
-        //     ["name" => "view timesheet"],
+            ["name" => "manage timesheet"],
+            ["name" => "create timesheet"],
+            ["name" => "edit timesheet"],
+            ["name" => "view timesheet"],
 
-        //     ["name" => "manage expense"],
-        //     ["name" => "create expense"],
-        //     ["name" => "view expense"],
+            ["name" => "manage expense"],
+            ["name" => "create expense"],
+            ["name" => "view expense"],
 
-        //     ["name" => "view calendar"],
+            ["name" => "view calendar"],
 
-        //     ["name" => "manage diary"],
+            ["name" => "manage diary"],
 
-        // ];
+        ];
 
-        // $advocateRole->givePermissionTo($advocatePermissions);
+        $advocateRole->givePermissionTo($advocatePermissions);
 
         // $advocate = User::create(
         //     [
@@ -399,64 +399,64 @@ class UserSeeder extends Seeder
         // $advocate->assignRole($advocateRole);
 
         // // client
-        // $clientRole = Role::create(
-        //     [
-        //         'name' => 'client',
-        //         'created_by' => $company->id,
-        //     ]
-        // );
+        $clientRole = Role::create(
+            [
+                'name' => 'client',
+                'created_by' => $company->id,
+            ]
+        );
 
-        // $clientPermissions = [
-        //     ["name" => "show dashboard"],
+        $clientPermissions = [
+            ["name" => "show dashboard"],
 
-        //     ["name" => "show group"],
-        //     ["name" => "manage group"],
+            ["name" => "show group"],
+            ["name" => "manage group"],
 
-        //     ["name" => "manage case"],
-        //     ["name" => "view case"],
+            ["name" => "manage case"],
+            ["name" => "view case"],
 
-        //     ["name" => "create todo"],
-        //     ["name" => "edit todo"],
-        //     ["name" => "view todo"],
-        //     ["name" => "delete todo"],
-        //     ["name" => "manage todo"],
+            ["name" => "create todo"],
+            ["name" => "edit todo"],
+            ["name" => "view todo"],
+            ["name" => "delete todo"],
+            ["name" => "manage todo"],
 
-        //     ["name" => "manage bill"],
-        //     ["name" => "create bill"],
-        //     ["name" => "edit bill"],
-        //     ["name" => "delete bill"],
-        //     ["name" => "view bill"],
+            ["name" => "manage bill"],
+            ["name" => "create bill"],
+            ["name" => "edit bill"],
+            ["name" => "delete bill"],
+            ["name" => "view bill"],
 
-        //     ["name" => "manage diary"],
+            ["name" => "manage diary"],
 
-        //     ["name" => "manage timesheet"],
-        //     ["name" => "create timesheet"],
-        //     ["name" => "edit timesheet"],
-        //     ["name" => "delete timesheet"],
-        //     ["name" => "view timesheet"],
+            ["name" => "manage timesheet"],
+            ["name" => "create timesheet"],
+            ["name" => "edit timesheet"],
+            ["name" => "delete timesheet"],
+            ["name" => "view timesheet"],
 
-        //     ["name" => "manage expense"],
-        //     ["name" => "create expense"],
-        //     ["name" => "edit expense"],
-        //     ["name" => "delete expense"],
-        //     ["name" => "view expense"],
+            ["name" => "manage expense"],
+            ["name" => "create expense"],
+            ["name" => "edit expense"],
+            ["name" => "delete expense"],
+            ["name" => "view expense"],
 
-        //     ["name" => "manage feereceived"],
-        //     ["name" => "create feereceived"],
-        //     ["name" => "edit feereceived"],
-        //     ["name" => "delete feereceived"],
-        //     ["name" => "view feereceived"],
+            ["name" => "manage feereceived"],
+            ["name" => "create feereceived"],
+            ["name" => "edit feereceived"],
+            ["name" => "delete feereceived"],
+            ["name" => "view feereceived"],
 
-        //     ["name" => "view calendar"],
+            ["name" => "view calendar"],
 
-        //     ["name" => "manage appointment"],
-        //     ["name" => "create appointment"],
-        //     ["name" => "edit appointment"],
-        //     ["name" => "delete appointment"],
+            ["name" => "manage appointment"],
+            ["name" => "create appointment"],
+            ["name" => "edit appointment"],
+            ["name" => "delete appointment"],
 
-        // ];
+        ];
 
-        // $clientRole->givePermissionTo($clientPermissions);
+        $clientRole->givePermissionTo($clientPermissions);
 
         // $client = User::create(
         //     [
@@ -478,6 +478,65 @@ class UserSeeder extends Seeder
         // $detail->save();
 
         // $client->assignRole($clientRole);
+
+        $employeeRole = Role::create(
+            [
+                'name' => 'employee',
+                'created_by' => $company->id,
+            ]
+        );
+
+        $employeePermissions = [
+            ["name" => "show dashboard"],
+
+            ["name" => "show group"],
+            ["name" => "manage group"],
+
+            ["name" => "manage case"],
+            ["name" => "view case"],
+
+            ["name" => "create todo"],
+            ["name" => "edit todo"],
+            ["name" => "view todo"],
+            ["name" => "delete todo"],
+            ["name" => "manage todo"],
+
+            ["name" => "manage bill"],
+            ["name" => "create bill"],
+            ["name" => "edit bill"],
+            ["name" => "delete bill"],
+            ["name" => "view bill"],
+
+            ["name" => "manage diary"],
+
+            ["name" => "manage timesheet"],
+            ["name" => "create timesheet"],
+            ["name" => "edit timesheet"],
+            ["name" => "delete timesheet"],
+            ["name" => "view timesheet"],
+
+            ["name" => "manage expense"],
+            ["name" => "create expense"],
+            ["name" => "edit expense"],
+            ["name" => "delete expense"],
+            ["name" => "view expense"],
+
+            ["name" => "manage feereceived"],
+            ["name" => "create feereceived"],
+            ["name" => "edit feereceived"],
+            ["name" => "delete feereceived"],
+            ["name" => "view feereceived"],
+
+            ["name" => "view calendar"],
+
+            ["name" => "manage appointment"],
+            ["name" => "create appointment"],
+            ["name" => "edit appointment"],
+            ["name" => "delete appointment"],
+
+        ];
+
+        $employeeRole->givePermissionTo($employeePermissions);
 
         Utility::languagecreate();
 

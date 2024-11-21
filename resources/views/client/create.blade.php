@@ -83,7 +83,7 @@
                                                         placeholder="{{ __('Enter Your Full Name') }}"
                                                         required autocomplete="name">
                                                         @error('name')
-                                                            <span class="invalid-password" role="alert">
+                                                            <span class="invalid-name" role="alert">
                                                                 <strong class="text-danger">{{ $message }}</strong>
                                                             </span>
                                                         @enderror
@@ -97,7 +97,7 @@
                                                             id="email" placeholder="{{ __('Enter Your Email Address') }}"
                                                             required autocomplete="email">
                                                         @error('email')
-                                                            <span class="invalid-password" role="alert">
+                                                            <span class="invalid-email" role="alert">
                                                                 <strong class="text-danger">{{ $message }}</strong>
                                                             </span>
                                                         @enderror
@@ -116,7 +116,7 @@
                                                 id="whats_app_number" placeholder="{{ __('Enter Your WhatsApp Number') }}"
                                                 autocomplete="whats_app_number">
                                             @error('whats_app_number')
-                                                <span class="invalid-password" role="alert">
+                                                <span class="invalid-whats_app_number" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -131,7 +131,7 @@
                                                 id="mobile_number" placeholder="{{ __('Enter Your Mobile Number') }}"
                                                 autocomplete="mobile_number">
                                             @error('mobile_number')
-                                                <span class="invalid-password" role="alert">
+                                                <span class="invalid-mobile_number" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -146,7 +146,7 @@
                                                 placeholder="{{ __('Enter Your Address') }}"
                                                 autocomplete="address">
                                             @error('address')
-                                                <span class="invalid-password" role="alert">
+                                                <span class="invalid-address" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -163,7 +163,7 @@
                                                 placeholder="{{ __('Enter Your Building Number') }}"
                                                 autocomplete="building_number">
                                             @error('building_number')
-                                                <span class="invalid-password" role="alert">
+                                                <span class="invalid-building_number" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -178,7 +178,7 @@
                                                 id="street" placeholder="{{ __('Enter Your Street Number') }}"
                                                 autocomplete="street_number">
                                             @error('street_number')
-                                                <span class="invalid-password" role="alert">
+                                                <span class="invalid-street_number" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -193,7 +193,7 @@
                                                 id="zone" placeholder="{{ __('Enter Your Zone Number') }}"
                                                 autocomplete="zone_number">
                                             @error('zone_number')
-                                                <span class="invalid-password" role="alert">
+                                                <span class="invalid-zone_number" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -208,7 +208,7 @@
                                                 placeholder="{{ __('Enter Your City') }}"
                                                 autocomplete="city">
                                             @error('city')
-                                                <span class="invalid-password" role="alert">
+                                                <span class="invalid-city" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -223,7 +223,7 @@
                                                 id="qid_number" placeholder="{{ __('Enter Your QID Number') }}"
                                                 autocomplete="qid_number">
                                             @error('qid_number')
-                                                <span class="invalid-password" role="alert">
+                                                <span class="invalid-qid_number" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -239,7 +239,7 @@
                                                 placeholder="{{ __('Enter Your Passport Number') }}"
                                                 autocomplete="passport_number">
                                             @error('passport_number')
-                                                <span class="invalid-password" role="alert">
+                                                <span class="invalid-passport_number" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -258,8 +258,8 @@
                                                     'placeholder' => __('Select a language'),
                                                 ],
                                             ) !!}
-                                            @error('password_switch')
-                                                <span class="invalid-password" role="alert">
+                                            @error('language')
+                                                <span class="invalid-language" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -272,6 +272,11 @@
                                             <input class="form-control" id="password" type="password" name="password" required
                                                 pattern=".{8,}" minlength="8" autocomplete = 'new-password'>
                                             <span class="small">{{ __('Minimum 8 characters') }}</span>
+                                            @error('password')
+                                                <span class="invalid-password" role="alert">
+                                                    <strong class="text-danger">{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
                                     </div>
 

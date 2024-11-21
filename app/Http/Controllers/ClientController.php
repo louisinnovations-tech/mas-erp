@@ -132,7 +132,7 @@ class ClientController extends Controller
                 if ($path['flag'] == 1) {
                     $url = $path['url'];
                 } else {
-                    return redirect()->route('users.index', Auth::user()->id)->with('error', __($path['msg']));
+                    return redirect()->back()->with('error', __($path['msg']));
                 }
 
                 $user->avatar = $fileNameToStore;
@@ -262,9 +262,10 @@ class ClientController extends Controller
                     if ($path['flag'] == 1) {
                         $url = $path['url'];
                     } else {
-                        return redirect()->route('users.index', Auth::user()->id)->with('error', __($path['msg']));
+                        return redirect()->back()->with('error', __($path['msg']));
                     }
 
+                    $user->avatar && Utility::delete_directory( $user->avatar);
                     $user->avatar = $fileNameToStore;
                 }
 

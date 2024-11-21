@@ -5,6 +5,7 @@
 /vendor/srmklive
 /public/storage
 /storage/*.key
+/storage/uploads
 /storage/app/public
 /storage/installed
 /vendor

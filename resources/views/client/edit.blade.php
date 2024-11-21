@@ -98,7 +98,7 @@
                                                         value="{{$user->name}}" placeholder="{{ __('Enter Your Full Name') }}"
                                                         required autocomplete="name">
                                                         @error('name')
-                                                            <span class="invalid-password" role="alert">
+                                                            <span class="invalid-name" role="alert">
                                                                 <strong class="text-danger">{{ $message }}</strong>
                                                             </span>
                                                         @enderror
@@ -112,7 +112,7 @@
                                                             id="email" placeholder="{{ __('Enter Your Email Address') }}"
                                                             value="{{$user->email}}" required autocomplete="email">
                                                         @error('email')
-                                                            <span class="invalid-password" role="alert">
+                                                            <span class="invalid-email" role="alert">
                                                                 <strong class="text-danger">{{ $message }}</strong>
                                                             </span>
                                                         @enderror
@@ -132,7 +132,7 @@
                                                 value="{{ old('whats_app_number' , $user_detail->whats_app_number) }}"
                                                 autocomplete="whats_app_number">
                                                 @error('whats_app_number')
-                                                    <span class="invalid-password" role="alert">
+                                                    <span class="invalid-whats_app_number" role="alert">
                                                         <strong class="text-danger">{{ $message }}</strong>
                                                     </span>
                                                 @enderror
@@ -148,7 +148,7 @@
                                                 value="{{ old('mobile_number', $user_detail->mobile_number) }}"
                                                 autocomplete="mobile_number">
                                             @error('mobile_number')
-                                                <span class="invalid-password" role="alert">
+                                                <span class="invalid-mobile_number" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -164,7 +164,7 @@
                                                 value="{{ old('address', $user_detail->address) }}"
                                                 autocomplete="address">
                                             @error('address')
-                                                <span class="invalid-password" role="alert">
+                                                <span class="invalid-address" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -182,7 +182,7 @@
                                                 value="{{ old('building_number' , $user_detail->building_number) }}"
                                                 autocomplete="building_number">
                                             @error('building_number')
-                                                <span class="invalid-password" role="alert">
+                                                <span class="invalid-building_number" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -198,7 +198,7 @@
                                                 value="{{ old('street_number' , $user_detail->street_number) }}"
                                                 autocomplete="street_number">
                                             @error('street_number')
-                                                <span class="invalid-password" role="alert">
+                                                <span class="invalid-street_number" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -214,7 +214,7 @@
                                                 value="{{ old('zone_number' , $user_detail->zone_number) }}"
                                                 autocomplete="zone_number">
                                             @error('zone_number')
-                                                <span class="invalid-password" role="alert">
+                                                <span class="invalid-zone_number" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -230,7 +230,7 @@
                                                 value="{{ old('city' , $user_detail->city) }}"
                                                 autocomplete="city">
                                             @error('city')
-                                                <span class="invalid-password" role="alert">
+                                                <span class="invalid-city" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -246,7 +246,7 @@
                                                 value="{{ old('qid_number' , $user_detail->qid_number) }}"
                                                 autocomplete="qid_number">
                                             @error('qid_number')
-                                                <span class="invalid-password" role="alert">
+                                                <span class="invalid-qid_number" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -263,7 +263,7 @@
                                                 value="{{ old('passport_number' , $user_detail->passport_number) }}"
                                                 autocomplete="passport_number">
                                             @error('passport_number')
-                                                <span class="invalid-password" role="alert">
+                                                <span class="invalid-passport_number" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -283,7 +283,7 @@
                                                 ],
                                             ) !!}
                                             @error('language')
-                                                <span class="invalid-password" role="alert">
+                                                <span class="invalid-language" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -297,7 +297,7 @@
                                                 value="on" id="password_switch" checked>
                                             <label class="form-check-label" for="password_switch"></label>
                                             @error('password_switch')
-                                                <span class="invalid-password" role="alert">
+                                                <span class="invalid-password_switch" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
                                                 </span>
                                             @enderror
