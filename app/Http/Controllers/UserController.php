@@ -226,6 +226,14 @@ class UserController extends Controller
     public function edit($id)
     {
         
+        $user = User::find($id);
+        if($user->type == 'advocate'){
+            return redirect(route('advocate.edit',$id));
+        }else if($user->type == 'client'){
+            return redirect(route('client.edit',$id));
+        }else if($user->type == 'employee'){
+            return redirect(route('employee.edit',$id));
+        }
         $eId        = $id;
         //Branchges
         $branches = Branch::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
@@ -242,12 +250,11 @@ class UserController extends Controller
 
         $employeeDetails = Employee::where('user_id', $id)->first();
         $employeesId  = \Auth::user()->employeeIdFormat(!empty($employeeDetails->employee_id) ? $employeeDetails->employee_id : '');
-        $departmentData  = Department::where('created_by', \Auth::user()->creatorId())->where('branch_id', $employeeDetails->branch_id)->get()->pluck('name', 'id');
+        // $departmentData  = Department::where('created_by', \Auth::user()->creatorId())->where('branch_id', $employeeDetails->branch_id)->get()->pluck('name', 'id');
         //  dd($departmentData);
 
         
 
-        $user = User::find($id);
         $user_detail = UserDetail::where('user_id', $user->id)->first();
         $roles = Role::where('created_by', '=', $user->creatorId())->get()->pluck('name', 'id');
         $advocate = $contacts = [];
@@ -275,7 +282,7 @@ class UserController extends Controller
         }
 
         //return view('users.edit', compact('user', 'referances', 'roles', 'user_detail', 'advocate', 'contacts', 'employee', 'members', 'client', 'cases'));
-        return view('users.edit', compact('user', 'departmentData', 'employeesId', 'branches', 'employee', 'department', 'designation', 'salaryType', 'referances', 'roles', 'user_detail', 'advocate', 'contacts', 'members', 'client', 'cases', 'employeeDetails'));
+        return view('users.edit', compact('user', 'employeesId', 'branches', 'employee', 'department', 'designation', 'salaryType', 'referances', 'roles', 'user_detail', 'advocate', 'contacts', 'members', 'client', 'cases', 'employeeDetails'));
     }
 
     /**

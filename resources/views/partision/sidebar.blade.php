@@ -59,58 +59,56 @@
                         </li>
                     @endcan
                 @else --}}
-                    @canany(['manage member', 'manage group', 'manage role'])
-                        @if (Auth::user()->type == 'company' || Auth::user()->type == 'advocate')
-                            <li
-                                class="dash-item dash-hasmenu {{ Request::route()->getName() == 'users.edit' || Request::route()->getName() == 'users.list' || Request::route()->getName() == 'userlog.index' ? 'active dash-trigger' : '' }}">
-                                <a href="#!" class="dash-link ">
-                                    <span class="dash-micon"><i class="ti ti-users"></i>
-                                    </span><span class="dash-mtext">{{ __('Staff') }}</span>
-                                    <span class="dash-arrow"><i data-feather="chevron-right"></i></span>
-                                </a>
-                                <ul
-                                    class="dash-submenu {{ Request::segment(1) == 'roles' || Request::segment(1) == 'users' || Request::route()->getName() == 'users.list' || Request::segment(1) == 'groups' ? 'show' : '' }}">
+                    @canany(['manage member', 'manage group', 'manage role', 'manage client', 'manage advocate'])
+                        <li
+                            class="dash-item dash-hasmenu {{ Request::route()->getName() == 'users.edit' || Request::route()->getName() == 'users.list' || Request::route()->getName() == 'userlog.index' ? 'active dash-trigger' : '' }}">
+                            <a href="#!" class="dash-link ">
+                                <span class="dash-micon"><i class="ti ti-users"></i>
+                                </span><span class="dash-mtext">{{ __('Staff') }}</span>
+                                <span class="dash-arrow"><i data-feather="chevron-right"></i></span>
+                            </a>
+                            <ul
+                                class="dash-submenu {{ Request::segment(1) == 'roles' || Request::segment(1) == 'users' || Request::route()->getName() == 'users.list' || Request::segment(1) == 'groups' ? 'show' : '' }}">
 
-                                    @can('manage role')
-                                        <li class="dash-item {{ in_array(Request::segment(1), ['roles', '']) ? ' active' : '' }}">
-                                            <a class="dash-link" href="{{ route('roles.index') }}">{{ __('Role') }}</a>
-                                        </li>
-                                    @endcan
+                                @can('manage role')
+                                    <li class="dash-item {{ in_array(Request::segment(1), ['roles', '']) ? ' active' : '' }}">
+                                        <a class="dash-link" href="{{ route('roles.index') }}">{{ __('Role') }}</a>
+                                    </li>
+                                @endcan
 
-                                    @can('manage member')
-                                        <li
-                                            class="dash-item {{ Request::route()->getName() == 'users.edit' || Request::route()->getName() == 'users.list' || Request::route()->getName() == 'userlog.index' ? 'active' : '' }}">
-                                            <a class="dash-link" href="{{ route('employee.index') }}">{{ __('Employees') }}</a>
-                                        </li>
-                                    @endcan
+                                @can('manage member')
+                                    <li
+                                        class="dash-item {{ Request::route()->getName() == 'users.edit' || Request::route()->getName() == 'users.list' || Request::route()->getName() == 'userlog.index' ? 'active' : '' }}">
+                                        <a class="dash-link" href="{{ route('employee.index') }}">{{ __('Employees') }}</a>
+                                    </li>
+                                @endcan
 
-                                    @can('manage client')
-                                        <li
-                                            class="dash-item dash-hasmenu {{ in_array(Request::segment(1), ['client', 'client-list']) ? ' active' : '' }}">
-                                            <a href="{{ route('client.index') }}" class="dash-link">
-                                                <!-- <span class="dash-micon"><i class="ti ti-user-check"></i></span> -->
-                                                <span class="dash-mtext">{{ __('Client') }}</span>
-                                            </a>
-                                        </li>
-                                    @endcan
+                                @can('manage client')
+                                    <li
+                                        class="dash-item dash-hasmenu {{ in_array(Request::segment(1), ['client', 'client-list']) ? ' active' : '' }}">
+                                        <a href="{{ route('client.index') }}" class="dash-link">
+                                            <!-- <span class="dash-micon"><i class="ti ti-user-check"></i></span> -->
+                                            <span class="dash-mtext">{{ __('Client') }}</span>
+                                        </a>
+                                    </li>
+                                @endcan
 
-                                    @can('manage advocate')
-                                        <li class="dash-item dash-hasmenu {{ in_array(Request::segment(1), ['advocate']) ? ' active' : '' }}">
-                                            <a href="{{ route('advocate.index') }}" class="dash-link">
-                                                <!-- <span class="dash-micon"><i class="fa fa-tasks"></i></span> -->
-                                                <span class="dash-mtext">{{ __('Advocate') }}</span>
-                                            </a>
-                                        </li>
-                                    @endcan
+                                @can('manage advocate')
+                                    <li class="dash-item dash-hasmenu {{ in_array(Request::segment(1), ['advocate']) ? ' active' : '' }}">
+                                        <a href="{{ route('advocate.index') }}" class="dash-link">
+                                            <!-- <span class="dash-micon"><i class="fa fa-tasks"></i></span> -->
+                                            <span class="dash-mtext">{{ __('Advocate') }}</span>
+                                        </a>
+                                    </li>
+                                @endcan
 
-                                    @can('manage group')
-                                        <li class="dash-item {{ in_array(Request::segment(1), ['groups', '']) ? ' active' : '' }}">
-                                            <a class="dash-link" href="{{ route('groups.index') }}">{{ __('Group') }}</a>
-                                        </li>
-                                    @endcan
-                                </ul>
-                            </li>
-                        @endif
+                                @can('manage group')
+                                    <li class="dash-item {{ in_array(Request::segment(1), ['groups', '']) ? ' active' : '' }}">
+                                        <a class="dash-link" href="{{ route('groups.index') }}">{{ __('Group') }}</a>
+                                    </li>
+                                @endcan
+                            </ul>
+                        </li>
                     @endcan
                 {{-- @endif --}}
 

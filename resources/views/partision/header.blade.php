@@ -57,7 +57,7 @@
                     </a>
 
                     <div class="dropdown-menu dash-h-dropdown">
-                        <a href="{{ route('users.edit', Auth::user()->id) }}" class="dropdown-item">
+                        <a href="{{ route((Auth::user()->type == 'advocate' ? 'advocate' : ( Auth::user()->type == 'client' ? 'client' : (Auth::user()->type == 'employee' ? 'employee' : 'users' ) )).'.edit', Auth::user()->id) }}" class="dropdown-item">
                             <i class="ti ti-user"></i>
                             <span>{{ __('Profile') }}</span>
                         </a>

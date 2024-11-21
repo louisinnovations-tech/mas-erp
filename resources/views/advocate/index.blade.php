@@ -76,7 +76,7 @@
                                         @endcan
                                         @can('edit advocate')
                                             <div class="action-btn bg-light-secondary ms-2">
-                                                <a href="{{ route('advocate.edit', $advocate->id) }}"
+                                                <a href="{{ route('advocate.edit', $advocate->user_id) }}"
                                                     class="mx-3 btn btn-sm d-inline-flex align-items-center "
                                                     title="{{ __('Edit') }}" data-bs-toggle="tooltip"
                                                     data-bs-placement="top"><i class="ti ti-edit "></i></a>

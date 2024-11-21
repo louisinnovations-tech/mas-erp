@@ -179,14 +179,13 @@ class AdvocateController extends Controller
      */
     public function edit($id)
     {
-        if (Auth::user()->can('edit advocate')) {
+        if (Auth::user()->can('edit advocate') || Auth::user()->id == $id) {
 
-            $advocate = Advocate::find($id);
+            $advocate = Advocate::where('user_id',$id)->first();
             if($advocate){
-                $userAdd = User::where('email',$advocate->email)->first();
                 $contacts = PointOfContacts::where('advocate_id',$advocate->id)->get();
                 $practiceAreas = PracticeArea::pluck('name', 'id');
-                return view('advocate.edit',compact('advocate','contacts','userAdd', 'practiceAreas'));
+                return view('advocate.edit',compact('advocate','contacts', 'practiceAreas'));
             }else{
 
                 return redirect()->back()->with('error', __('Advocate not found.'));
@@ -205,7 +204,7 @@ class AdvocateController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (Auth::user()->can('edit advocate')) {
+        if (Auth::user()->can('edit advocate') || Auth::user()->id == $id) {
 
             $validator = Validator::make(
                 $request->all(),
@@ -223,7 +222,7 @@ class AdvocateController extends Controller
                 return redirect()->back()->with('error', $messages->first());
             }
 
-            $advocate = Advocate::find($id);
+            $advocate = Advocate::where('user_id',$id)->first();
             $userAdd = $advocate->getAdvUser;
 
             if ($userAdd->email != $request->email) {
@@ -260,10 +259,10 @@ class AdvocateController extends Controller
             $userAdd->name = $request->name;
             $userAdd->email = $request->email;
             $userAdd->referral_id = '#' . time();
-            $userAdd->is_enable_login = $request->password_switch == 'on';
+            Auth::user()->can('edit advocate') && Auth::user()->id != $id && $userAdd->is_enable_login = $request->password_switch == 'on';
             $userAdd->save();
 
-            return redirect()->route('advocate.index')->with('success', __('Advocate successfully updated.'));
+            return redirect()->route('advocate.edit',$id)->with('success', __('Successfully updated.'));
         } else {
             return redirect()->back()->with('error', __('Permission Denied.'));
         }

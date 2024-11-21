@@ -332,8 +332,8 @@ class UserSeeder extends Seeder
             ["name" => "manage doctype"],
             ["name" => "create doctype"],
 
-            ["name" => "show group"],
-            ["name" => "manage group"],
+            // ["name" => "show group"],
+            // ["name" => "manage group"],
 
             ["name" => "show member"],
 
@@ -409,8 +409,8 @@ class UserSeeder extends Seeder
         $clientPermissions = [
             ["name" => "show dashboard"],
 
-            ["name" => "show group"],
-            ["name" => "manage group"],
+            // ["name" => "show group"],
+            // ["name" => "manage group"],
 
             ["name" => "manage case"],
             ["name" => "view case"],

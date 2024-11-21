@@ -57,9 +57,6 @@ class EmployeePermissionSeeder extends Seeder
         $employeePermissions = [
             ["name" => "show dashboard"],
 
-            ["name" => "show group"],
-            ["name" => "manage group"],
-
             ["name" => "manage case"],
             ["name" => "view case"],
 

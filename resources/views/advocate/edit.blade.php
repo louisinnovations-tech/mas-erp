@@ -11,7 +11,7 @@
 @endphp
 @section('content')
 
-    {{ Form::model($advocate, ['route' => ['advocate.update', $advocate->id], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) }}
+    {{ Form::model($advocate, ['route' => ['advocate.update', $advocate->user_id], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) }}
 
     <div class="row">
         <div class="col-md-1"></div>
@@ -22,7 +22,7 @@
                         <div class="col-md-6 col-sm-6 ">
                             <div class="form-group">
 
-                            {{ Form::label('name', __('Advocate Name'), ['class' => 'col-form-label']) }}
+                            {{ Form::label('name', __( Auth::user()->id == $advocate->user_id ? 'Name' : 'Advocate Name'), ['class' => 'col-form-label']) }}
                             {{ Form::text('name',$advocate->getAdvUser->name, ['class' => 'form-control', 'required' => 'required']) }}
                         </div>
                     </div>
@@ -217,14 +217,19 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 mb-3 form-group mt-4">
-                            <label for="password_switch">{{ __('Login is enable') }}</label>
-                            <div class="form-check form-switch custom-switch-v1 float-end">
-                                <input type="checkbox" name="password_switch" class="form-check-input input-primary pointer"
-                                    value="on" id="password_switch" @if($advocate->getAdvUser->is_enable_login) checked @endif>
-                                <label class="form-check-label" for="password_switch"></label>
-                            </div>
-                        </div>
+                        
+                        @if(Auth::user()->id != $advocate->id)
+                            @can('edit advocate')
+                                <div class="col-md-6 mb-3 form-group mt-4">
+                                    <label for="password_switch">{{ __('Login is enable') }}</label>
+                                    <div class="form-check form-switch custom-switch-v1 float-end">
+                                        <input type="checkbox" name="password_switch" class="form-check-input input-primary pointer"
+                                            value="on" id="password_switch" @if($advocate->getAdvUser->is_enable_login) checked @endif>
+                                        <label class="form-check-label" for="password_switch"></label>
+                                    </div>
+                                </div>
+                            @endcan
+                        @endif
 
                     </div>
                 </div>
