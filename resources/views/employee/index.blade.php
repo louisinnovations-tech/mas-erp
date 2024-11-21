@@ -7,7 +7,7 @@
 
         @canany(['create member','create user'])
         <div class="text-end d-flex all-button-box justify-content-md-end justify-content-center">
-            <a href="#" class="btn btn-sm btn-primary mx-1" data-ajax-popup="true" data-size="lg"
+            <a href="{{ route('employee.create') }}" class="btn btn-sm btn-primary mx-1" data-ajax-popup="true" data-size="lg"
                 data-title="Add Employee" data-url="{{ route('employee.create') }}" data-toggle="tooltip"
                 title="{{ __('Create New Employee') }}">
                 <i class="ti ti-plus"></i>
@@ -46,7 +46,7 @@
                                         </button>
 
                                         <div class="dropdown-menu dropdown-menu-end">
-                                            <a href="#" class="dropdown-item" data-bs-original-title="{{__('Edit Employee')}}" data-ajax-popup="true" data-size="lg" data-title="Edit Employee" data-url="{{route('employee.edit', $employee->id)}}" data-toggle="tooltip">
+                                            <a href="{{ route('employee.edit' , $employee->id) }}" class="dropdown-item" data-bs-original-title="{{__('Edit Employee')}}" data-ajax-popup="true" data-size="lg" data-title="Edit Employee" data-url="{{route('employee.edit', $employee->id)}}" data-toggle="tooltip">
                                                 <i class="ti ti-pencil"></i>
                                                 <span>{{__('Edit')}}</span>
                                             </a>
@@ -94,7 +94,7 @@
             <div class="col-md-6 col-xxl-3 col-lg-4 col-sm-6 border-end border-bottom">
                 <div class="card  shadow-none bg-transparent border h-100 text-center rounded-0">
                     <div class="card-body border-0 pb-0">
-                        <a href="#" class="btn-addnew-project border-0" data-ajax-popup="true" data-size="lg" data-title="Create New Employee"
+                        <a href="{{ route('employee.create') }}" class="btn-addnew-project border-0" data-ajax-popup="true" data-size="lg" data-title="Create New Employee"
                             data-url="{{ route('employee.create') }}">
                                 <div class="bg-primary proj-add-icon">
                                     <i class="ti ti-plus"></i>

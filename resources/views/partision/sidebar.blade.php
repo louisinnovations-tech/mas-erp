@@ -80,7 +80,7 @@
                                     @can('manage member')
                                         <li
                                             class="dash-item {{ Request::route()->getName() == 'users.edit' || Request::route()->getName() == 'users.list' || Request::route()->getName() == 'userlog.index' ? 'active' : '' }}">
-                                            <a class="dash-link" href="{{ route('users.index') }}">{{ __('Employees') }}</a>
+                                            <a class="dash-link" href="{{ route('employee.index') }}">{{ __('Employees') }}</a>
                                         </li>
                                     @endcan
 

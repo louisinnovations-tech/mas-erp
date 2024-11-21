@@ -2,22 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Advocate;
 use App\Models\group;
-use App\Models\Order;
-use App\Models\PointOfContacts;
 use App\Models\User;
-use App\Models\Cases;
 use App\Models\UserDetail;
 use App\Models\Utility;
-use Database\Seeders\UserSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Spatie\Permission\Models\Role;
-use Carbon\Carbon;
 use App\Models\Department;
 use App\Models\Designation;
 use App\Models\Employee;
@@ -29,14 +21,16 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id="")
+    public function index()
     {
 
-        if (Auth::user()->can('manage member') || Auth::user()->can('manage user')) {
+        if (Auth::user()->can('manage member') || Auth::user()->can('manage employee') || Auth::user()->can('manage user')) {
 
 
                 $employee = User::where('created_by', '=', Auth::user()->creatorId())
-                        ->where('super_admin_employee',1)
+                        ->where('type','employee')
+                        ->orderBy('created_at','desc')
+                        // ->where('super_admin_employee',1)
                         ->get();
 
                 $user_details = UserDetail::get();
@@ -57,7 +51,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->can('create member') || Auth::user()->can('create user')) {
+        if (Auth::user()->can('create member') || Auth::user()->can('manage employee') || Auth::user()->can('create user')) {
             $permissions=$this->permission_arr();
 
             return view('employee.create',compact('permissions'));
@@ -74,53 +68,79 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        if (Auth::user()->can('create member') || Auth::user()->can('manage employee') || Auth::user()->can('create user')) {
+            $validator = Validator::make(
+                $request->all(), [
+                    'name' => 'required|max:120',
+                    'email' => 'required|email|unique:users',
+                    'password' => 'required|min:8',
+                ]
+            );
 
-        $validator = Validator::make(
-            $request->all(), [
-                'name' => 'required|max:120',
-                'email' => 'required|email|unique:users',
-                'password' => 'required|min:8',
-            ]
-        );
-
-        if ($validator->fails()) {
-            $messages = $validator->getMessageBag();
-            return redirect()->back()->with('error', $messages->first());
-        }
-        $permissions=$this->permission_arr();
-        $permission_arr=[];
-
-        if($request->permissions){
-            foreach($permissions as $key => $permission)
-            {
-            foreach ($request->permissions as $ke => $value) {
-                    if($key==$value)
-                    {
-                        $permission_arr[$key]=$permission;
-                    }
+            if ($validator->fails()) {
+                $messages = $validator->getMessageBag();
+                return redirect()->back()->with('error', $messages->first());
             }
-            }
-        }else{
-            return redirect()->back()->with('error', __('Atleast one permission is required.'));
-        }
 
-        $user = new User();
-        $user['name'] = $request->name;
-        $user['email'] = $request->email;
-        $user['password'] = Hash::make($request->password);
-        $user['type'] ='superAdminEmployee';
-        $user['super_admin_employee'] =1;
-        $user['permission_json'] = json_encode($permission_arr);
-        $user['lang'] = 'en';
-        $user['created_by'] = Auth::user()->creatorId();
-        if (Utility::settings()['email_verification'] == 'off') {
-           $user['email_verified_at'] = date('Y-m-d H:i:s');
+            // $permissions=$this->permission_arr();
+            // $permission_arr=[];
+
+            // if($request->permissions){
+            //     foreach($permissions as $key => $permission)
+            //     {
+            //     foreach ($request->permissions as $ke => $value) {
+            //             if($key==$value)
+            //             {
+            //                 $permission_arr[$key]=$permission;
+            //             }
+            //     }
+            //     }
+            // }else{
+            //     return redirect()->back()->with('error', __('Atleast one permission is required.'));
+            // }
+
+            $user = new User();
+            $user['name'] = $request->name;
+            $user['email'] = $request->email;
+            $user['password'] = Hash::make($request->password);
+            $user->assignRole('employee');
+            $user['type'] ='employee';
+            // $user['type'] ='super_admin_employee';
+            // $user['super_admin_employee'] = 1;
+            // $user['permission_json'] = json_encode($permission_arr);
+            $user['lang'] = 'en';
+            $user['created_by'] = Auth::user()->creatorId();
+            if (Utility::settings()['email_verification'] == 'off') {
+            $user['email_verified_at'] = date('Y-m-d H:i:s');
+            }
+            if ($request->hasFile('profile')) {
+                $filenameWithExt = $request->file('profile')->getClientOriginalName();
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file('profile')->getClientOriginalExtension();
+                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+                $dir = 'uploads/profile/';
+                $path = Utility::upload_file($request, 'profile', $fileNameToStore, $dir, []);
+
+                if ($path['flag'] == 1) {
+                    $url = $path['url'];
+                } else {
+                    return redirect()->back()->with('error', __($path['msg']));
+                }
+
+                $user->avatar = $fileNameToStore;
+            }
+            $user->save();
+            $detail = new UserDetail();
+            $detail->user_id = $user->id;
+            $detail->mobile_number = $request->mobile_number;
+            $detail->land_phone = $request->land_phone;
+            $detail->extension_number = $request->extension_number;
+            $detail->profession = $request->profession;
+            $detail->department = $request->department;
+            $detail->save();
+            return redirect()->route('employee.index')->with('success', __('Employee successfully created.'));
         }
-        $user->save();
-        $detail = new UserDetail();
-        $detail->user_id = $user->id;
-        $detail->save();
-        return redirect()->route('employee.index')->with('success', __('Employee successfully created.'));
+        return redirect()->back()->with('error', __('Permission denied.'));
     }
 
     /**
@@ -131,8 +151,8 @@ class EmployeeController extends Controller
      */
     public function show($id)
     {
-        if (\Auth::user()->type == 'company' || \Auth::user()->type == 'employee') {
-            $eId        =   \Crypt::decrypt($id);
+        if (\Auth::user()->type == 'company' || \Auth::user()->type == 'employee' && \Auth::user()->id == $id) {
+            // $eId        =   \Crypt::decrypt($id);
             $user       =   User::find($eId);
             $userDetails  =   UserDetail::find($eId);
             $employee   =   Employee::where('user_id', $eId)->first();
@@ -162,10 +182,11 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        if (Auth::user()->can('create member') || Auth::user()->can('create user')) {
+        if (Auth::user()->can('create member') || Auth::user()->can('create employee') || Auth::user()->can('create user') || \Auth::user()->type == 'employee' && \Auth::user()->id == $id) {
             $permissions=$this->permission_arr();
-            $user=User::where('id',$id)->first();
-            $eId        = \Crypt::decrypt($id);
+            $user=User::with('userDetail')->find($id);
+            $userDetails = $user->userDetail;
+            // $eId        = \Crypt::decrypt($id);
         // //Branchges
         // $branches = Branch::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
         // $branches->prepend('Select Branch', '');
@@ -185,7 +206,7 @@ class EmployeeController extends Controller
         // //  dd($departmentData);
 
         // return view('employee.edit', compact('user', 'departmentData', 'employeesId', 'branches', 'employee', 'department', 'designation', 'salaryType'));
-            return view('employee.edit',compact('permissions','user'));
+            return view('employee.edit',compact('permissions','user','userDetails'));
         } else {
             return redirect()->back()->with('error', __('Permission Denied.'));
         }
@@ -200,39 +221,65 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (Auth::user()->can('edit member') || Auth::user()->can('edit employee') || Auth::user()->can('edit user') || \Auth::user()->type == 'employee' && \Auth::user()->id == $id) {
+            $validator = Validator::make(
+                $request->all(), [
+                    'name' => 'required|max:120',
+                    'email' => 'required|email|unique:users,email,'.$id,
+                ]
+            );
 
-        $validator = Validator::make(
-            $request->all(), [
-                'name' => 'required|max:120',
-                'email' => 'required|email',
-            ]
-        );
+            if ($validator->fails()) {
+                $messages = $validator->getMessageBag();
+                return redirect()->back()->with('error', $messages->first());
+            }
+            // $permissions=$this->permission_arr();
+            // $permission_arr=[];
 
-        if ($validator->fails()) {
-            $messages = $validator->getMessageBag();
-            return redirect()->back()->with('error', $messages->first());
-        }
-        $permissions=$this->permission_arr();
-        $permission_arr=[];
+            // foreach($permissions as $key => $permission)
+            // {
+            //    foreach ($request->permissions as $ke => $value) {
+            //         if($key==$value)
+            //         {
+            //             $permission_arr[$key]=$permission;
+            //         }
+            //    }
+            // }
 
-        foreach($permissions as $key => $permission)
-        {
-           foreach ($request->permissions as $ke => $value) {
-                if($key==$value)
-                {
-                    $permission_arr[$key]=$permission;
+            $user =User::where('id',$id)->first();
+            $user['name'] = $request->name;
+            $user['email'] = $request->email;
+            // $user['permission_json'] = json_encode($permission_arr);
+            if ($request->hasFile('profile')) {
+                $filenameWithExt = $request->file('profile')->getClientOriginalName();
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file('profile')->getClientOriginalExtension();
+                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+                $dir = 'uploads/profile/';
+                $path = Utility::upload_file($request, 'profile', $fileNameToStore, $dir, []);
+
+                if ($path['flag'] == 1) {
+                    $url = $path['url'];
+                } else {
+                    return redirect()->back()->with('error', __($path['msg']));
                 }
-           }
+                $user->avatar && Utility::delete_directory( $user->avatar);
+
+                $user->avatar = $fileNameToStore;
+            }
+            $user->save();
+
+            $detail = $user->userDetail;
+            $detail->mobile_number = $request->mobile_number;
+            $detail->land_phone = $request->land_phone;
+            $detail->extension_number = $request->extension_number;
+            $detail->profession = $request->profession;
+            $detail->department = $request->department;
+            $detail->save();
+
+            return redirect()->route('employee.index')->with('success', __('Employee successfully Updated.'));
         }
-
-        $user =User::where('id',$id)->first();
-        $user['name'] = $request->name;
-        $user['email'] = $request->email;
-        $user['permission_json'] = json_encode($permission_arr);
-
-        $user->save();
-
-        return redirect()->route('employee.index')->with('success', __('Employee successfully Updated.'));
+        return redirect()->back()->with('error', __('Permission Denied.'));
     }
 
     /**
@@ -250,7 +297,7 @@ class EmployeeController extends Controller
             $premission_arr = get_object_vars($premission);
         }
 
-        if ((Auth::user()->can('delete member') || Auth::user()->can('delete user')) || (Auth::user()->super_admin_employee==1 )) {
+        if ((Auth::user()->can('delete member') || Auth::user()->can('delete employee') || Auth::user()->can('delete user')) || (Auth::user()->super_admin_employee==1 )) {
 
             $user = User::find($id);
             $detail = UserDetail::where('user_id', $user->id)->first();
