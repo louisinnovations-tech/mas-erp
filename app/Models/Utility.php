@@ -76,6 +76,7 @@ class Utility extends Model
             "company_logo_dark" => "logo-dark.png",
             "company_favicon" => "",
             "employee_prefix" => "#EMP00",
+            "client_prefix" => "#CLI00",
             'enable_cookie' => 'on',
             'necessary_cookies' => 'on',
             'cookie_logging' => 'on',

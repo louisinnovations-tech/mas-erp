@@ -52,7 +52,7 @@
     <meta property="og:url" content={{ env('APP_URL') }}>
     <meta property="og:title" content={{ $settings['meta_keywords'] ?? '' }}>
     <meta property="og:description" content={{ $settings['meta_description'] ?? '' }}>
-    <meta property="og:image" content={{ asset(Storage::url('uploads/metaevent/' . $settings['meta_image'] ?? '')) }}>
+    <meta property="og:image" content={{ $settings['meta_image'] ? asset(Storage::url('uploads/metaevent/' . $settings['meta_image'])) : '' }}>
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
@@ -60,7 +60,7 @@
     <meta property="twitter:title" content={{ $settings['meta_keywords'] ?? '' }}>
     <meta property="twitter:description" content={{ $settings['meta_description'] ?? '' }}>
     <meta property="twitter:image"
-        content={{ asset(Storage::url('uploads/metaevent/' . $settings['meta_image'] ?? '')) }}>
+    content={{ $settings['meta_image'] ? asset(Storage::url('uploads/metaevent/' . $settings['meta_image'])) : '' }}>
 
     <!-- Favicon icon -->
     <link rel="icon"

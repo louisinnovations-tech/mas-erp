@@ -14,9 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
-use Illuminate\Validation\Rules;
 use Maatwebsite\Excel\Facades\Excel;
-use Spatie\Permission\Models\Role;
 use App\Models\PracticeArea;
 
 

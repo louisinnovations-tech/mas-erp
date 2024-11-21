@@ -31,9 +31,9 @@
                 </a>
             </div>
 
-            @canany(['create member', 'create user'])
+            @canany(['create client'])
                 <div class="text-end d-flex all-button-box justify-content-md-end justify-content-center">
-                    <a href="#" class="btn btn-sm btn-primary mx-1" data-ajax-popup="true" data-size="md"
+                    <a href="{{route('client.create')}}" class="btn btn-sm btn-primary mx-1" data-ajax-popup="true" data-size="md"
                         data-title="Add Client" data-url="{{ route('client.create') }}" data-toggle="tooltip"
                         title="{{ __('Create New Client') }}">
                         <i class="ti ti-plus"></i>
@@ -41,7 +41,7 @@
                 </div>
             </div>
         </div>
-    @endcan
+         @endcan
 
 @endsection
 
@@ -82,7 +82,7 @@
                                                 <div class="dropdown-menu dropdown-menu-end">
 
                                                     @canany(['edit member', 'edit user'])
-                                                        <a href="{{ route('users.edit', $user->id) }}" class="dropdown-item"
+                                                        <a href="{{ route('client.edit', $user->id) }}" class="dropdown-item"
                                                             data-bs-original-title="{{ __('Edit User') }}">
                                                             <i class="ti ti-pencil"></i>
                                                             <span>{{ __('Edit') }}</span>
@@ -211,12 +211,12 @@
                     <div class="card  shadow-none bg-transparent border h-100 text-center rounded-0">
                         <div class="card-body border-0 pb-0">
                             <a href="#" class="btn-addnew-project border-0" data-ajax-popup="true" data-size="md"
-                                data-title="Create New User" data-url="{{ route('client.create') }}">
+                                data-title="Create New Client" data-url="{{ route('client.create') }}">
                                 <div class="bg-primary proj-add-icon">
                                     <i class="ti ti-plus"></i>
                                 </div>
-                                <h6 class="mt-4 mb-2">{{ __('New User') }}</h6>
-                                <p class="text-muted text-center">{{ __('Click here to add New User') }}</p>
+                                <h6 class="mt-4 mb-2">{{ __('New Client') }}</h6>
+                                <p class="text-muted text-center">{{ __('Click here to add New Client') }}</p>
                             </a>
                         </div>
                     </div>

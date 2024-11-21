@@ -306,7 +306,6 @@ Route::group(['middleware'=>['auth','XSS','verified']], function(){
 
     Route::resource('appointments',AppointmentsController::class);
 
-    Route::resource('client', ClientController::class);
     Route::get('client-list', [ClientController::class, 'userList'])->name('client.list');
 
     Route::get('/client-fileimport', [ClientController::class, 'fileImport'])->name('clients.file.import');
@@ -893,6 +892,7 @@ Route::group(['middleware' => ['verified']], function () {
 
     Route::group(['middleware' => ['auth', 'XSS', 'revalidate',],], function () {
         Route::resource('client', ClientController::class);
+        Route::post('edit-client-personal-info/{id}', [ClientController::class, 'clientPersonalInfoEdit'])->name('client.personal.update');
     });
     Route::any('client-reset-password/{id}', [ClientController::class, 'clientPassword'])->name('client.reset');
     Route::post('client-reset-password/{id}', [ClientController::class, 'clientPasswordReset'])->name('client.password.update');

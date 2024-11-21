@@ -11,6 +11,8 @@ use App\Models\Hearing;
 use App\Models\PointOfContacts;
 use App\Models\User;
 use App\Models\Bill;
+use App\Models\Client;
+use App\Models\Department;
 use App\Models\Fee;
 use App\Models\UserDetail;
 use App\Models\Utility;
@@ -39,6 +41,7 @@ class ClientController extends Controller
 
             $users = User::where('created_by', '=', Auth::user()->creatorId())
                     ->where('type','client')
+                    ->orderBy('created_at','desc')
                     ->get();
 
             $user_details = UserDetail::get();
@@ -94,85 +97,65 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::user()->can('create member') || Auth::user()->can('create user')) {
+        if (Auth::user()->can('create client')) {
 
-            if (Auth::user()->type == 'company') {
-                $validator = Validator::make(
-                    $request->all(), [
-                        'name' => 'required|max:120',
-                        'email' => 'nullable|email|unique:users',
-                        'password' => 'required|min:8',
-                    ]
-                );
+            $request->validate(
+                [
+                    'name' => 'required|max:120',
+                    'email' => 'required|email|unique:users,email',
+                    'password' => 'required|min:8',
+                    'mobile_number' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+                ]
+            );
 
-                if ($validator->fails()) {
-                    $messages = $validator->getMessageBag();
-                    return redirect()->back()->with('error', $messages->first());
+            $user = Auth::user();
+            $user = new User();
+            $user['name'] = $request->name;
+            $user['email'] = $request->email;
+            $user['password'] = Hash::make($request->password);
+            $user['lang'] = 'en';
+            $user['created_by'] = Auth::user()->creatorId();
+            $user['email_verified_at'] = date('Y-m-d H:i:s');
+            $user['is_enable_login'] = $request->password_switch == 'on';
+
+            $user->assignRole('client');
+            $user['type'] = 'client';
+
+            if ($request->hasFile('profile')) {
+                $filenameWithExt = $request->file('profile')->getClientOriginalName();
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file('profile')->getClientOriginalExtension();
+                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+                $dir = 'uploads/profile/';
+                $path = Utility::upload_file($request, 'profile', $fileNameToStore, $dir, []);
+
+                if ($path['flag'] == 1) {
+                    $url = $path['url'];
+                } else {
+                    return redirect()->route('users.index', Auth::user()->id)->with('error', __($path['msg']));
                 }
 
-                $user = Auth::user();
-                $user = new User();
-                $user['name'] = $request->name;
-                $user['email'] = $request->email;
-                $user['password'] = Hash::make($request->password);
-                $user['lang'] = 'en';
-                $user['created_by'] = Auth::user()->creatorId();
-                $user['email_verified_at'] = date('Y-m-d H:i:s');
-
-                $user->assignRole('client');
-                $user['type'] = 'client';
-
-                $user->save();
-
-                $detail = new UserDetail();
-                $detail->user_id = $user->id;
-                $detail->save();
-
-                return redirect()->route('client.index')->with('success', __('Member successfully created.'));
-
-
-            } else {
-
-                $validator = Validator::make(
-                    $request->all(), [
-                        'name' => 'required|max:120',
-                        'email' => 'required|email|unique:users',
-                        'password' => 'required|min:8',
-                    ]
-                );
-
-                if ($validator->fails()) {
-                    $messages = $validator->getMessageBag();
-                    return redirect()->back()->with('error', $messages->first());
-                }
-
-                $user = new User();
-                $user['name'] = $request->name;
-                $user['email'] = $request->email;
-                $user['password'] = Hash::make($request->password);
-                $user['lang'] = 'en';
-                $user['created_by'] = Auth::user()->creatorId();
-
-                if (Utility::settings()['email_verification'] == 'off') {
-                   $user['email_verified_at'] = date('Y-m-d H:i:s');
-                }
-
-                $role_r = Role::findByName('company');
-                $user->assignRole($role_r);
-                $user['type'] = 'company';
-
-                $user->save();
-
-                $detail = new UserDetail();
-                $detail->user_id = $user->id;
-                $detail->save();
-
-                //create company default roles
-                $user->MakeRole($user->id);
-
-                return redirect()->route('users.index')->with('success', __('Member successfully created.'));
-
+                $user->avatar = $fileNameToStore;
             }
+
+
+            $user->save();
+
+            $detail = new UserDetail();
+            $detail->user_id = $user->id;
+            $detail['mobile_number']         = $request->mobile_number;
+            $detail['whats_app_number']         = $request->whats_app_number;
+            $detail['address']         = $request->address;
+            $detail['building_number']         = $request->building_number;
+            $detail['street_number']         = $request->street_number;
+            $detail['zone_number']         = $request->zone_number;
+            $detail['qid_number']         = $request->qid_number;
+            $detail['city']         = $request->city;
+            $detail['passport_number']         = $request->passport_number;
+            $detail['language']         = $request->language;
+            $detail->save();
+
+            return redirect()->route('client.index')->with('success', __('Member successfully created.'));
 
         } else {
             return redirect()->back()->with('error', __('Permission Denied.'));
@@ -227,18 +210,20 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-
         $user = User::find($id);
-        $user_detail = UserDetail::where('user_id', $user->id)->first();
-        $roles = Role::where('created_by', '=', $user->creatorId())->get()->pluck('name', 'id');
-        $advocate = $contacts = [];
-
-        if(Auth::user()->type == 'advocate'){
-            $advocate = Advocate::where('user_id',$user->id)->first();
-            $contacts = PointOfContacts::where('advocate_id',$advocate->id)->get();
+        if($user){
+            if ((Auth::user()->type == 'client' && Auth::user()->id == $user->id )|| Auth::user()->can('edit client')) {
+                $user_detail = UserDetail::where('user_id', $user->id)->first();
+                $roles = Role::where('created_by', '=', $user->creatorId())->get()->pluck('name', 'id');
+                $advocate = $contacts = [];
+                if(Auth::user()->type == 'advocate'){
+                    $advocate = Advocate::where('user_id',$user->id)->first();
+                    $contacts = PointOfContacts::where('advocate_id',$advocate->id)->get();
+                }
+                return view('client.edit', compact('user', 'roles', 'user_detail','advocate','contacts'));
+            }
         }
-        return view('users.edit', compact('user', 'roles', 'user_detail','advocate','contacts'));
-
+        return redirect()->back()->with('error', __('Client not found.'));
     }
 
     /**
@@ -250,176 +235,64 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $validator = Validator::make(
-            $request->all(), [
+        $request->validate(
+            [
                 'name' => 'required|max:120',
-                'email' => 'required|email',
+                'email' => 'required|email|unique:users,email,'.$id,
+                'mobile_number' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
             ]
         );
-        if (!empty($request->mobile_number)) {
 
-            $validator = Validator::make(
-                $request->all(), [
-                    'mobile_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-                ]
-            );
-        }
-
-        if ($validator->fails()) {
-            $messages = $validator->getMessageBag();
-
-            return redirect()->back()->with('error', $messages->first());
-        }
         $user = User::find($id);
 
         if ($user) {
-            if (Auth::user()->type == 'advocate') {
+            if ((Auth::user()->type == 'client' && Auth::user()->id == $user->id )|| Auth::user()->can('edit client')) {
 
-                $adv = Advocate::where('user_id',$user->id)->first();
-
-                if ($adv) {
-
-
-                    if ($validator->fails()) {
-                        $messages = $validator->getMessageBag();
-
-                        return redirect()->back()->with('error', $messages->first());
-                    }
-
-                    $advocate = Advocate::find($adv->id);
-                    $userAdd = $advocate->getAdvUser($advocate->user_id);
-
-                    if ($userAdd->email != $request->email) {
-
-                        $users = User::where('email',$request->email)->first();
-                        if (!empty($users)) {
-                            return redirect()->back()->with('error', __('Email address already exist.'));
-                        }
-                    }
-
-                    $advocate['phone_number'] = !empty($request->phone_number) ? $request->phone_number : NULL;
-                    $advocate['age'] = !empty($request->age) ? $request->age : NULL;
-                    $advocate['company_name'] = $request->company_name;
-                    $advocate['website'] = $request->website;
-                    $advocate['ofc_address_line_1'] = $request->ofc_address_line_1;
-                    $advocate['ofc_address_line_2'] = $request->name;
-                    $advocate['ofc_country'] = $request->ofc_country;
-                    $advocate['ofc_state'] = !empty($request->ofc_state) ? $request->ofc_state : NULL;
-                    $advocate['ofc_city'] = $request->ofc_city;
-                    $advocate['ofc_zip_code'] = !empty($request->ofc_zip_code) ? $request->ofc_zip_code : NULL;
-                    $advocate['home_address_line_1'] = $request->home_address_line_1;
-                    $advocate['home_address_line_2'] = $request->home_address_line_2;
-                    $advocate['home_country'] = $request->home_country;
-                    $advocate['home_state'] = $request->home_state;
-                    $advocate['home_city'] = $request->home_city;
-                    $advocate['home_zip_code'] = !empty($request->home_zip_code) ? $request->home_zip_code : NULL;
-                    $advocate->save();
-
-                    $userAdd->name = $request->name;
-                    $userAdd->email = $request->email;
-
-                    if ($request->hasFile('profile')) {
-                        $filenameWithExt = $request->file('profile')->getClientOriginalName();
-                        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-                        $extension = $request->file('profile')->getClientOriginalExtension();
-                        $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-                        $dir = 'uploads/profile/';
-                        $path = Utility::upload_file($request, 'profile', $fileNameToStore, $dir, []);
-
-                        if ($path['flag'] == 1) {
-                            $url = $path['url'];
-                        } else {
-                            return redirect()->route('users.index', Auth::user()->id)->with('error', __($path['msg']));
-                        }
-
-                        $userAdd->avatar = $fileNameToStore;
-                    }
-
-                    $userAdd->save();
-
-                    return redirect()->back()->with('success', __('Successfully Updated!'));
-
-                }else{
-                    return redirect()->back()->with('error', __('Advocate not found.'));
-
-                }
-
-
-            }else{
-                $user['name'] = $request->name;
-                $user['email'] = $request->email;
+                $user->name = $request->name;
+                $user->email = $request->email;
 
                 if ($request->hasFile('profile')) {
-                    if (Auth::user()->type == 'company') {
-                        $filenameWithExt = $request->file('profile')->getClientOriginalName();
-                        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-                        $extension = $request->file('profile')->getClientOriginalExtension();
-                        $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-                        $settings = Utility::Settings();
-                        $url = '';
-                        $dir = 'uploads/profile/';
-                        $path = Utility::upload_file($request, 'profile', $fileNameToStore, $dir, []);
+                    $filenameWithExt = $request->file('profile')->getClientOriginalName();
+                    $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                    $extension = $request->file('profile')->getClientOriginalExtension();
+                    $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+                    $dir = 'uploads/profile/';
+                    $path = Utility::upload_file($request, 'profile', $fileNameToStore, $dir, []);
 
-                        if ($path['flag'] == 1) {
-                            $url = $path['url'];
-                        } else {
-                            return redirect()->route('users.index', Auth::user()->id)->with('error', __($path['msg']));
-                        }
-
-                        $user->avatar = $fileNameToStore;
-                    }else{
-                        $dir        = 'uploads/profile/';
-                        $file_path = $dir.$user['avatar'];
-
-
-                            $filenameWithExt = $request->file('profile')->getClientOriginalName();
-                            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-                            $extension = $request->file('profile')->getClientOriginalExtension();
-                            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-                            $settings = Utility::Settings();
-                            $url = '';
-                            $dir = 'uploads/profile/';
-                            $path = Utility::upload_file($request, 'profile', $fileNameToStore, $dir, []);
-
-                            if ($path['flag'] == 1) {
-                                $url = $path['url'];
-                            } else {
-                                return redirect()->route('users.index', Auth::user()->id)->with('error', __($path['msg']));
-                            }
-
-                            $user->avatar = $fileNameToStore;
-
+                    if ($path['flag'] == 1) {
+                        $url = $path['url'];
+                    } else {
+                        return redirect()->route('users.index', Auth::user()->id)->with('error', __($path['msg']));
                     }
 
-
+                    $user->avatar = $fileNameToStore;
                 }
 
-                $user->update();
+                $user->is_enable_login = $request->password_switch == 'on';
+                $user->save();
 
-                $detail = UserDetail::where('user_id', $user->id)->first();
-
-                $detail->mobile_number = !empty($request->mobile_number) ? $request->mobile_number : null;
-                $detail->address = $request->address;
-                $detail->city = $request->city;
-                $detail->state = $request->state;
-                $detail->zip_code = !empty($request->zip_code) ? $request->zip_code : null;
-                $detail->landmark = $request->landmark;
-                $detail->about = $request->about;
-
+                $detail = $user->userDetail;
+                $detail['mobile_number']         = $request->mobile_number;
+                $detail['whats_app_number']         = $request->whats_app_number;
+                $detail['address']         = $request->address;
+                $detail['building_number']         = $request->building_number;
+                $detail['street_number']         = $request->street_number;
+                $detail['zone_number']         = $request->zone_number;
+                $detail['qid_number']         = $request->qid_number;
+                $detail['city']         = $request->city;
+                $detail['passport_number']         = $request->passport_number;
+                $detail['language']         = $request->language;
                 $detail->save();
 
-                return redirect()->route('users.index')->with('success', __('Successfully Updated!'));
+                return redirect()->back()->with('success', __('Successfully Updated!'));
+
+            }else{
+                return redirect()->back()->with('error', __('Permission Denied.'));
             }
-
-
         } else {
-            return redirect()->back()->with('error', __('Member not found.'));
+            return redirect()->back()->with('error', __('Client not found.'));
 
         }
-
-
-
     }
 
     /**
@@ -565,5 +438,23 @@ class ClientController extends Controller
         $data = Excel::download(new ClientExport(), $name . '.xlsx');
         ob_end_clean();
         return $data;
+    }
+
+    public function getdepartment(Request $request)
+    {
+        if ($request->branch_id == 0) {
+            $departments = Department::where('created_by', '=', \Auth::user()->creatorId())->get()->pluck('name', 'id')->toArray();
+        } else {
+            $departments = Department::where('created_by', '=', \Auth::user()->creatorId())->where('branch_id', $request->branch_id)->get()->pluck('name', 'id')->toArray();
+        }
+
+        return response()->json($departments);
+    }
+
+    public function json(Request $request)
+    {
+        $designations = Designation::where('department', $request->department_id)->get()->pluck('name', 'id')->toArray();
+
+        return response()->json($designations);
     }
 }

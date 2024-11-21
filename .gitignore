@@ -1,7 +1,11 @@
 
+/.phpunit.cache
+/public/build
+/public/hot
 /vendor/srmklive
 /public/storage
 /storage/*.key
+/storage/app/public
 /storage/installed
 /vendor
 .env
@@ -9,3 +13,16 @@
 .env.backup
 .env.production
 .phpunit.result.cache
+/node_modules
+
+Homestead.json
+Homestead.yaml
+auth.json
+npm-debug.log
+yarn-error.log
+composer.lock
+package-lock.json
+/.fleet
+/.idea
+/.vscode
+

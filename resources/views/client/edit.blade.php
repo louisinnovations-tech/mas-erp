@@ -1,261 +1,335 @@
-@extends('layouts.admin')
 @php
-    $profile = \App\Models\Utility::get_file('uploads/avatar/');
+    $file_validation = App\Models\Utility::file_upload_validation();
 @endphp
-@push('css-page')
-@endpush
-@push('script-page')
-    <script>
-        var scrollSpy = new bootstrap.ScrollSpy(document.body, {
-            target: '#useradd-sidenav',
-            offset: 300
-        })
-    </script>
-@endpush
+@extends('layouts.app')
 @section('page-title')
-    {{ __('Client Edit') }}
+    @if ($user->id == Auth::user()->id && $user->type == 'company')
+        {{ __('Edit Client Profile') }}
+    @else
+        {{ __('Edit Profile Info') }}
+    @endif
 @endsection
-@section('title')
-    <div class="d-inline-block">
-        <h5 class="h4 d-inline-block font-weight-400 mb-0"> {{ \Auth::user()->clientIdFormat($client->client_id) }}
-            {{ __('Edit') }}</h5>
-    </div>
-@endsection
+
+
+@php
+    $logo = App\Models\Utility::get_file('uploads/profile');
+
+    $settings = App\Models\Utility::settings();
+@endphp
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('client.index') }}">{{ __('Client') }}</a></li>
-    <li class="breadcrumb-item active" aria-current="page">{{ $user->name }}</li>
+    <li class="breadcrumb-item">
+        @if ($user->id == Auth::user()->id && $user->type == 'company')
+            {{ __('Edit Client Profile') }}
+        @else
+            {{ __('Edit Profile') }}
+        @endif
+    </li>
 @endsection
-@section('action-btn')
-@endsection
+
 @section('content')
-    <div class="row">
-        <!-- [ sample-page ] start -->
+    <div class="row p-0 g-0">
+
         <div class="col-sm-12">
-            <div class="row">
-                <div class="col-xl-3">
-                    <div class="card sticky-top" style="top:30px">
-                        <div class="list-group list-group-flush" id="useradd-sidenav">
-                            <a href="#useradd-1"
-                                class="list-group-item list-group-item-action border-0">{{ __('Personal Info') }} <div
-                                    class="float-end"><i class="ti ti-chevron-right"></i></div></a>
-                            <a href="#useradd-2"
-                                class="list-group-item list-group-item-action border-0">{{ __('Company Info') }} <div
-                                    class="float-end"><i class="ti ti-chevron-right"></i></div></a>
+            <div class="row g-0">
+                <div class="col-xl-3 border-end border-bottom">
+                    <div class="card shadow-none bg-transparent sticky-top" style="top:70px">
+                        <div class="list-group list-group-flush rounded-0" id="useradd-sidenav">
+                            <a href="#useradd-1" class="list-group-item list-group-item-action">{{ __('Client Profile') }} <div class="float-end"><i class="ti ti-chevron-right"></i></div></a>
+                            @if ($user->id == Auth::user()->id) 
+                                <!-- <a href="#useradd-2"
+                                    class="list-group-item list-group-item-action border-0">{{ __('Company Info') }} <div
+                                        class="float-end"><i class="ti ti-chevron-right"></i></div></a> -->
+                                <!-- <a href="#useradd-2"
+                                    class="list-group-item list-group-item-action">{{ __('Change Password') }}
+                                    <div class="float-end"><i class="ti ti-chevron-right"></i></div>
+                                </a> -->
+                            @endif
                         </div>
                     </div>
                 </div>
+
+
                 <div class="col-xl-9">
-                    <div id="useradd-1" class="card">
-                        {{ Form::model($client, ['route' => ['client.personal.update', $client->user_id], 'method' => 'post', 'enctype' => 'multipart/form-data']) }}
+                    <div id="useradd-1" class="card  shadow-none rounded-0 border-bottom">
+
                         <div class="card-header">
-                            <h5>{{ __('Personal Info') }}</h5>
-                            <small class="text-muted">{{ __('Edit details about your personal information') }}</small>
+                            <h5 class="mb-0">{{ __('Profile Information') }}</h5>
                         </div>
-
                         <div class="card-body">
-                            <form>
-                                <div class="row mt-3">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            {{ Form::label('name', __('Name'), ['class' => 'form-label']) }}
-                                            {{ Form::text('name', $user->name, ['class' => 'form-control font-style', 'placeholder' => 'Enter Name']) }}
-                                            @error('name')
-                                                <span class="invalid-name" role="alert">
-                                                    <strong class="text-danger">{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            {{ Form::label('mobile', __('Mobile'), ['class' => 'form-label']) }}
-                                            {{ Form::text('mobile', $client->mobile, ['class' => 'form-control', 'placeholder' => 'Enter Mobile']) }}
-                                            @error('mobile')
-                                                <span class="invalid-mobile" role="alert">
-                                                    <strong class="text-danger">{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            {{ Form::label('address_1', __('Address 1'), ['class' => 'form-label']) }}
-                                            {{ Form::textarea('address_1', $client->address_1, ['class' => 'form-control', 'rows' => '4', 'placeholder' => 'Enter Address']) }}
-                                            @error('address_1')
-                                                <span class="invalid-address_1" role="alert">
-                                                    <strong class="text-danger">{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            {{ Form::label('address_2', __('Address 2'), ['class' => 'form-label']) }}
-                                            {{ Form::textarea('address_2', $client->address_2, ['class' => 'form-control', 'rows' => '4', 'placeholder' => 'Enter Address']) }}
-                                            @error('address_2')
-                                                <span class="invalid-address_2" role="alert">
-                                                    <strong class="text-danger">{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            {{ Form::label('city', __('City'), ['class' => 'form-label']) }}
-                                            {{ Form::text('city', $client->city, ['class' => 'form-control', 'placeholder' => 'Enter City']) }}
-                                            @error('city')
-                                                <span class="invalid-city" role="alert">
-                                                    <strong class="text-danger">{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        {{ Form::label('state', __('State'), ['class' => 'form-label']) }}
-                                        {{ Form::text('state', $client->state, ['class' => 'form-control', 'placeholder' => 'Enter State']) }}
-                                        @error('state')
-                                            <span class="invalid-state" role="alert">
-                                                <strong class="text-danger">{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6">
-                                        {{ Form::label('country', __('Country'), ['class' => 'form-label']) }}
-                                        {{ Form::text('country', $client->country, ['class' => 'form-control', 'placeholder' => 'Enter Country']) }}
-                                        @error('country')
-                                            <span class="invalid-country" role="alert">
-                                                <strong class="text-danger">{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6">
-                                        {{ Form::label('zip_code', __('Zip Code'), ['class' => 'form-label']) }}
-                                        {{ Form::text('zip_code', $client->zip_code, ['class' => 'form-control', 'placeholder' => 'Enter Zip Code']) }}
-                                        @error('zip_code')
-                                            <span class="invalid-zip_code" role="alert">
-                                                <strong class="text-danger">{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 mt-2">
-                                        {{ Form::label('zip_code', __('Avatar'), ['class' => 'form-label']) }}
-                                        <div class="card bg-gradient-primary hover-shadow-lg border-0">
-                                            <div class="card-body py-3">
-                                                <div class="row row-grid align-items-center">
-                                                    <div class="col-lg-8">
-                                                        <div class="media align-items-center">
-                                                            <a href="#" class="avatar avatar-lg rounded-circle mr-3">
-                                                                <img @if (!empty($user->avatar)) src="{{ $profile . '/' . $user->avatar }}" @else avatar="{{ $user->name }}" @endif
-                                                                    class="avatar  rounded-circle avatar-lg">
-                                                            </a>
-                                                            <div class="media-body ms-3">
-                                                                <h5 class="text-dark mb-2">{{ $user->name }}</h5>
-                                                                <div>
-                                                                    <div class="input-group">
-                                                                        <input type="file" class="form-control"
-                                                                            id="file-1" name="profile"
-                                                                            aria-describedby="inputGroupFileAddon04"
-                                                                            aria-label="Upload"
-                                                                            data-multiple-caption="{count} files selected"
-                                                                            multiple />
-                                                                    </div>
-
-
-                                                                </div>
-                                                            </div>
+                            {{ Form::model($user_detail, ['route' => ['client.update', $user->id], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) }}
+                                <div class=" setting-card">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-sm-6 col-md-6">
+                                            <div class="card-body text-center">
+                                                <div class="logo-content">
+                                                    <a href="{{ !empty($user->avatar) ? $logo . '/' . $user : $logo . '/avatar.png' }}"
+                                                        target="_blank">
+                                                        <img src="{{ !empty($user->avatar) ? $logo . '/' . $user->avatar : $logo . '/avatar.png' }}"
+                                                            width="100" id="profile">
+                                                    </a>
+                                                </div>
+                                                <div class="choose-files mt-4">
+                                                    <label for="profile_pic">
+                                                        <div class="bg-primary profile_update"
+                                                            style="max-width: 100% !important;"> <i
+                                                                class="ti ti-upload px-1"></i>{{ __('Choose file here') }}
                                                         </div>
+                                                        <input type="file" class="file" name="profile" accept="image/*"
+                                                            id="profile_pic"
+                                                            onchange="document.getElementById('profile').src = window.URL.createObjectURL(this.files[0])"
+                                                            style="width: 0px !important">
+                                                        <p style="margin-top: -20px;text-align: center;"><span
+                                                                class="text-muted m-0" data-toggle="tooltip"
+                                                                title="{{ $file_validation['mimes'] }} {{ __('Max Size: ') }}{{ $file_validation['max_size'] }}"
+                                                                data-bs-toggle="tooltip"
+                                                                data-bs-placement="top">{{ __('Allowed file extension') }}</span>
+                                                        </p>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-8 col-sm-6 col-md-6">
+                                            <div class="card-body">
+
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="col-form-label text-dark">{{ __('Full Name') }}</label>
+                                                        <input class="form-control " name="name" type="text" id="fullname"
+                                                        value="{{$user->name}}" placeholder="{{ __('Enter Your Full Name') }}"
+                                                        required autocomplete="name">
+                                                        @error('name')
+                                                            <span class="invalid-password" role="alert">
+                                                                <strong class="text-danger">{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="email"
+                                                            class="col-form-label text-dark">{{ __('Email') }}</label>
+                                                        <input class="form-control " name="email" type="text"
+                                                            id="email" placeholder="{{ __('Enter Your Email Address') }}"
+                                                            value="{{$user->email}}" required autocomplete="email">
+                                                        @error('email')
+                                                            <span class="invalid-password" role="alert">
+                                                                <strong class="text-danger">{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        {{ Form::submit(__('Update'), ['class' => 'btn btn-primary d-flex align-items-center']) }}
-                                    </div>
-
-
                                 </div>
-                            </form>
-                        </div>
-                        {{ Form::close() }}
-                    </div>
-                    <div id="useradd-2" class="card">
-                        {{ Form::model($client, ['route' => ['client.update.company', $client->user_id], 'method' => 'post']) }}
-                        <div class="card-header">
-                            <h5>{{ __('Company Info') }}</h5>
-                            <small class="text-muted">{{ __('Edit details about your company information') }}</small>
-                        </div>
-                        <div class="card-body">
-                            <form>
-                                <div class="row mt-3">
-                                    <div class="col-sm-12">
+                                <div class="row card-body">
+                                    <div class="col-lg-6 col-sm-6">
                                         <div class="form-group">
-                                            {!! Form::label('clt_id', __('Client ID'), ['class' => 'form-label']) !!}
-                                            {!! Form::text('clt_id', \Auth::user()->clientIdFormat($client->client_id), [
-                                                'class' => 'form-control',
-                                                'readonly',
-                                            ]) !!}
+                                            <label for="whats_app_number"
+                                                class="col-form-label text-dark">{{ __('WhatsApp Number') }}</label>
+                                            <input class="form-control " name="whats_app_number" type="number"
+                                                id="whats_app_number" placeholder="{{ __('Enter Your WhatsApp Number') }}"
+                                                value="{{ old('whats_app_number' , $user_detail->whats_app_number) }}"
+                                                autocomplete="whats_app_number">
+                                                @error('whats_app_number')
+                                                    <span class="invalid-password" role="alert">
+                                                        <strong class="text-danger">{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+
+                                    <div class="col-lg-6 col-sm-6">
                                         <div class="form-group">
-                                            {{ Form::label('company_name', __('Company Name'), ['class' => 'form-label']) }}
-                                            {{ Form::text('company_name', $client->company_name, ['class' => 'form-control', 'placeholder' => 'Enter  Company Name']) }}
-                                            @error('company_name')
-                                                <span class="invalid-company_name" role="alert">
+                                            <label for="mobile_number"
+                                                class="col-form-label text-dark">{{ __('Mobile Number') }}</label>
+                                            <input class="form-control " name="mobile_number" type="number"
+                                                id="mobile_number" placeholder="{{ __('Enter Your Mobile Number') }}"
+                                                value="{{ old('mobile_number', $user_detail->mobile_number) }}"
+                                                autocomplete="mobile_number">
+                                            @error('mobile_number')
+                                                <span class="invalid-password" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+
+                                    <div class="col-lg-6 col-sm-6">
                                         <div class="form-group">
-                                            {{ Form::label('website', __('Website'), ['class' => 'form-label']) }}
-                                            {{ Form::text('website', $client->website, ['class' => 'form-control', 'placeholder' => 'Enter Website']) }}
-                                            @error('website')
-                                                <span class="invalid-website" role="alert">
+                                            <label for="address"
+                                                class="col-form-label text-dark">{{ __('Address') }}</label>
+                                            <input class="form-control " name="address" type="text" id="address"
+                                                placeholder="{{ __('Enter Your Address') }}"
+                                                value="{{ old('address', $user_detail->address) }}"
+                                                autocomplete="address">
+                                            @error('address')
+                                                <span class="invalid-password" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    
+
+                                    <div class="col-lg-6 col-sm-6">
                                         <div class="form-group">
-                                            {{ Form::label('tax_number', __('Tax Number'), ['class' => 'form-label']) }}
-                                            {{ Form::text('tax_number', $client->tax_number, ['class' => 'form-control', 'placeholder' => 'Enter Tax Number']) }}
-                                            @error('tax_number')
-                                                <span class="invalid-tax_number" role="alert">
-                                                    <strong class="text-danger">{{ $message }}</strong> 
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            {{ Form::label('notes', __('Notes'), ['class' => 'form-label']) }}
-                                            {{ Form::textarea('notes', $client->notes, ['class' => 'form-control', 'placeholder' => 'Enter Notes', 'rows' => '3']) }}
-                                            @error('notes')
-                                                <span class="invalid-notes" role="alert">
+                                            <label for="building_number"
+                                                class="col-form-label text-dark">{{ __('Building Number') }}</label>
+                                            <input class="form-control " name="building_number" type="text"
+                                                id="building_number"
+                                                placeholder="{{ __('Enter Your Building Number') }}"
+                                                value="{{ old('building_number' , $user_detail->building_number) }}"
+                                                autocomplete="building_number">
+                                            @error('building_number')
+                                                <span class="invalid-password" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        {{ Form::submit(__('Update'), ['class' => 'btn btn-primary d-flex align-items-center']) }}
+
+                                    <div class="col-lg-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label for="street"
+                                                class="col-form-label text-dark">{{ __('Street Number') }}</label>
+                                            <input class="form-control " name="street_number" type="text"
+                                                id="street" placeholder="{{ __('Enter Your Street Number') }}"
+                                                value="{{ old('street_number' , $user_detail->street_number) }}"
+                                                autocomplete="street_number">
+                                            @error('street_number')
+                                                <span class="invalid-password" role="alert">
+                                                    <strong class="text-danger">{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label for="zone"
+                                                class="col-form-label text-dark">{{ __('Zone Number') }}</label>
+                                            <input class="form-control " name="zone_number" type="text"
+                                                id="zone" placeholder="{{ __('Enter Your Zone Number') }}"
+                                                value="{{ old('zone_number' , $user_detail->zone_number) }}"
+                                                autocomplete="zone_number">
+                                            @error('zone_number')
+                                                <span class="invalid-password" role="alert">
+                                                    <strong class="text-danger">{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label for="city"
+                                                class="col-form-label text-dark">{{ __('City') }}</label>
+                                            <input class="form-control " name="city" type="text" id="city"
+                                                placeholder="{{ __('Enter Your City') }}"
+                                                value="{{ old('city' , $user_detail->city) }}"
+                                                autocomplete="city">
+                                            @error('city')
+                                                <span class="invalid-password" role="alert">
+                                                    <strong class="text-danger">{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label for="qid_number"
+                                                class="col-form-label text-dark">{{ __('QID Number') }}</label>
+                                            <input class="form-control " name="qid_number" type="number"
+                                                id="qid_number" placeholder="{{ __('Enter Your QID Number') }}"
+                                                value="{{ old('qid_number' , $user_detail->qid_number) }}"
+                                                autocomplete="qid_number">
+                                            @error('qid_number')
+                                                <span class="invalid-password" role="alert">
+                                                    <strong class="text-danger">{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-sm-6">
+                                        <div class="form-group">
+                                            <label for="passport_number"
+                                                class="col-form-label text-dark">{{ __('Passport Number') }}</label>
+                                            <input class="form-control " name="passport_number" type="number"
+                                                id="passport_number"
+                                                placeholder="{{ __('Enter Your Passport Number') }}"
+                                                value="{{ old('passport_number' , $user_detail->passport_number) }}"
+                                                autocomplete="passport_number">
+                                            @error('passport_number')
+                                                <span class="invalid-password" role="alert">
+                                                    <strong class="text-danger">{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-sm-6">
+                                        <div class="form-group">
+                                            {{ Form::label('language', __('Select Language'), ['class' => 'col-form-label text-dark']) }}
+                                            {!! Form::select(
+                                                'language',
+                                                ['en' => 'English', 'ar' => 'Arabic'],
+                                                old('language' , $user_detail->language),
+                                                [
+                                                    'class' => 'form-control multi-select',
+                                                    'placeholder' => __('Select a language'),
+                                                ],
+                                            ) !!}
+                                            @error('language')
+                                                <span class="invalid-password" role="alert">
+                                                    <strong class="text-danger">{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3 form-group mt-4">
+                                        <label for="password_switch">{{ __('Login is enable') }}</label>
+                                        <div class="form-check form-switch custom-switch-v1 float-end">
+                                            <input type="checkbox" name="password_switch" class="form-check-input input-primary pointer"
+                                                value="on" id="password_switch" checked>
+                                            <label class="form-check-label" for="password_switch"></label>
+                                            @error('password_switch')
+                                                <span class="invalid-password" role="alert">
+                                                    <strong class="text-danger">{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 text-end">
+                                        <input type="submit" value="{{ __('Save Changes') }}"
+                                            class="btn btn-print-invoice  btn-primary m-r-10">
                                     </div>
                                 </div>
-                            </form>
+                            {{ Form::close() }}
                         </div>
-                        {{ Form::close() }}
                     </div>
-
                 </div>
             </div>
-            <!-- [ sample-page ] end -->
         </div>
-        <!-- [ Main Content ] end -->
     </div>
 @endsection
+
+
+@push('custom-script')
+    <script>
+        var scrollSpy = new bootstrap.ScrollSpy(document.body, {
+            target: '#useradd-sidenav',
+            offset: 300,
+
+        })
+        $(".list-group-item").on('click', function() {
+            $('.list-group-item').filter(function() {
+                return this.href == id;
+            }).parent().removeClass('text-primary');
+        });
+    </script>
+
+@endpush

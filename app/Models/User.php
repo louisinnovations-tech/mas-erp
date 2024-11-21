@@ -277,6 +277,11 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
+    public function userDetail()
+    {
+        return $this->hasOne('App\Models\UserDetail', 'user_id', 'id');
+    }
+
     public function employeeDetail()
     {
         return $this->hasOne('App\Models\Employee', 'user_id', 'id');
