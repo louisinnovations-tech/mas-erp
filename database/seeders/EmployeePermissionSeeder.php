@@ -24,7 +24,7 @@ class EmployeePermissionSeeder extends Seeder
             ['name' => 'delete employee', 'guard_name' => 'web'],
         ];
 
-        Permission::insert($items);
+        // Permission::insert($items);
 
         $companyPermissions =  [
             ['name' => 'manage employee'],
@@ -39,7 +39,7 @@ class EmployeePermissionSeeder extends Seeder
                 'name' => 'company',
             ],
             [
-                'created_by' => $company ? $company->id : 0
+                'created_by' => 0
             ]
         );
 

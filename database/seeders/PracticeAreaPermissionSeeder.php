@@ -23,7 +23,7 @@ class PracticeAreaPermissionSeeder extends Seeder
             ['name' => 'delete practice areas', 'guard_name' => 'web'],
         ];
 
-        Permission::insert($items);
+        // Permission::insert($items);
 
         $companyPermissions =  [
             ['name' => 'manage practice areas'],
