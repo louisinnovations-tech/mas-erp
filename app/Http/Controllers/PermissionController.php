@@ -52,16 +52,7 @@ class PermissionController extends Controller
         $roles = $request['roles'];
 
         $permission->save();
-
-        if(!empty($request['roles']))
-        { //If one or more role is selected
-            foreach($roles as $role)
-            {
-                $r          = Role::where('id', '=', $role)->firstOrFail(); //Match input role to db record
-                $permission = Permission::where('name', '=', $name)->first(); //Match input //permission to db record
-                $r->givePermissionTo($permission);
-            }
-        }
+        $permission->roles()->attach($roles);
 
         return redirect()->back()->with('success', __('Permission successfully created.'));
     }
@@ -86,7 +77,8 @@ class PermissionController extends Controller
     public function edit(Permission $permission)
     {
         $roles = Role::get();
-        return view('permission.edit',compact('roles','permission'));
+        $selectedRoles = $permission->roles()->pluck('id')->toArray();
+        return view('permission.edit',compact('roles','permission','selectedRoles'));
     }
 
     /**
@@ -102,6 +94,9 @@ class PermissionController extends Controller
 
         $input = $request->all();
         $permission->fill($input)->save();
+
+        $roles = $request['roles'];
+        $permission->roles()->sync($roles);
 
         return redirect()->back()->with('success', __('Permission successfully updated.'));
     }

@@ -117,8 +117,14 @@ use App\Http\Controllers\TrainingTypeController;
 use App\Http\Controllers\PerformanceTypeController;
 use App\Http\Controllers\CompetenciesController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\ContractController;
+use App\Http\Controllers\ContractTypeController;
+use App\Http\Controllers\CreditNoteController;
+use App\Http\Controllers\GoalController;
 use App\Http\Controllers\GoalTypeController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PracticeAreaController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SalaryTypeController;
 use App\Models\User;
 
@@ -700,6 +706,22 @@ Route::resource('account-assets', AssetController::class)->middleware(
     ]
 );
 Route::resource('document-upload', DocumentUploadController::class)->middleware(
+    [
+        'auth',
+        'XSS',
+        'revalidate',
+    ]
+);
+
+Route::resource('contracts', ContractController::class)->middleware(
+    [
+        'auth',
+        'XSS',
+        'revalidate',
+    ]
+);
+
+Route::resource('contract-types', ContractTypeController::class)->middleware(
     [
         'auth',
         'XSS',

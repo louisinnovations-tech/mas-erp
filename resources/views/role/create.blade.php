@@ -33,7 +33,7 @@
                             </thead>
                             <tbody>
                                 @php
-                                    $modules=['dashboard','client','advocate','document','doctype','member','group','court','highcourt','bench','cause','case','todo','bill','tax','diary','timesheet','expense','feereceived','calendar','motions','crm','support','setting'];
+                                    $modules=['dashboard','client','advocate','practice areas','employee','document','doctype','member','group','court','highcourt','bench','cause','case','todo','bill','tax','diary','timesheet','expense','feereceived','appointment','calendar','motions','crm','support','setting'];
                                 @endphp
                                 @foreach($modules as $module)
                                     <tr>

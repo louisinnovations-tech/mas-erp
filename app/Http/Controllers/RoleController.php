@@ -71,16 +71,10 @@ class RoleController extends Controller
         $role             = new Role();
         $role->name       = $request->name;
         $role->created_by = Auth::user()->id;
-
-        $permissions      = $request['permissions'];
         $role->save();
 
-        foreach($permissions as $permission)
-        {
-            $p = Permission::where('id', '=', $permission)->firstOrFail();
-            $role->givePermissionTo($p);
-        }
-
+        $permissions      = $request['permissions'];
+        $role->givePermissionTo($permissions);
 
         return redirect()->back()->with('success', __('Role successfully created.'));
     }
@@ -122,20 +116,8 @@ class RoleController extends Controller
             $permissions = $request['permissions'];
             $role->fill($input)->save();
 
-            $p_all = Permission::all();
+            $role->syncPermissions($permissions);
 
-            foreach($p_all as $p)
-            {
-                $role->revokePermissionTo($p);
-            }
-
-            if (!empty($permissions)) {
-                foreach($permissions as $permission)
-                {
-                    $p = Permission::where('id', '=', $permission)->firstOrFail();
-                    $role->givePermissionTo($p);
-                }
-            }
             return redirect()->back()->with('success', __('Role successfully updated.'));
         }else
         {

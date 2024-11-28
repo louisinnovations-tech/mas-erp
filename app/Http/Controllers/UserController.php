@@ -33,7 +33,7 @@ class UserController extends Controller
 
         if (Auth::user()->can('manage member') || Auth::user()->can('manage user')) {
 
-            $users = User::where('created_by', '=', Auth::user()->creatorId())->where('type', '!=', 'advocate')->where('type', '!=', 'client')->get();
+            $users = User::where('created_by', '=', Auth::user()->creatorId())->whereNotIn('type', ['advocate', 'client', 'employee'])->get();
 
             $user_details = UserDetail::get();
 
@@ -48,7 +48,7 @@ class UserController extends Controller
 
         if (Auth::user()->can('manage member') || Auth::user()->can('manage user')) {
 
-            $users = User::where('created_by', '=', Auth::user()->creatorId())->where('type', '!=', 'advocate')->get();
+            $users = User::where('created_by', '=', Auth::user()->creatorId())->whereNotIn('type', ['advocate', 'client', 'employee'])->get();
             $user_details = UserDetail::get();
 
             return view('users.list', compact('users', 'user_details'));

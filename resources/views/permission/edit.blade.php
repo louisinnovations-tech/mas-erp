@@ -10,6 +10,22 @@
             </span>
         @enderror
     </div>
+    <div class="form-group">
+        @if(!$roles->isEmpty())
+            <h6>{{__('Assign Permission to Roles')}}</h6>
+            @foreach ($roles as $role)
+                <div class="custom-control custom-checkbox">
+                    {{Form::checkbox('roles[]',$role->id,in_array($role->id,$selectedRoles), ['class'=>'custom-control-input','id' =>'role'.$role->id])}}
+                    {{Form::label('role'.$role->id, __(ucfirst($role->name)),['class'=>'custom-control-label '])}}
+                </div>
+            @endforeach
+        @endif
+        @error('roles')
+        <span class="invalid-roles" role="alert">
+                <strong class="text-danger">{{ $message }}</strong>
+            </span>
+        @enderror
+    </div>
 </div>
 </div>
 <div class="modal-footer">
