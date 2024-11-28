@@ -924,6 +924,7 @@ Route::group(['middleware' => ['verified']], function () {
     Route::any('holiday/get_holiday_data', [HolidayController::class, 'get_holiday_data'])->name('holiday.get_holiday_data')->middleware(['auth', 'XSS']);
     Route::any('meeting/get_holiday_data', [MeetingController::class, 'get_holiday_data'])->name('meeting.get_holiday_data')->middleware(['auth', 'XSS']);
     Route::any('zoom-meeting/get_holiday_data', [ZoommeetingController::class, 'get_holiday_data'])->name('zoom-meeting.get_holiday_data')->middleware(['auth', 'XSS']);
+    Route::resource('zoom-meetings', ZoommeetingController::class)->middleware(['auth', 'XSS']);
     Route::any('leave/get_holiday_data', [LeaveController::class, 'get_holiday_data'])->name('leave.get_holiday_data')->middleware(['auth', 'XSS']);
     Route::any('task/get_holiday_data', [ProjectController::class, 'get_holiday_data'])->name('task.get_holiday_data')->middleware(['auth', 'XSS']);
 

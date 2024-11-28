@@ -41,7 +41,19 @@ class RoleController extends Controller
     public function create()
     {
 
-        $permissions = Permission::all()->pluck('name', 'id')->toArray();
+        $permissions = Permission::all();
+        // Group by the module (the part before the first space in the permission name)
+        $permissions = $permissions->groupBy(function ($permission) {
+            // Extract the first part of the permission name (before the first space), which is the module
+            return ucfirst(trim(strstr($permission->name, ' '), ' '));
+        })->map(function ($group) {
+            // For each group, modify the 'name' field to contain only the first part (before the first space)
+            return $group->map(function ($permission) {
+                // Modify the permission name to only have the module (first part before the space)
+                $permission->name = strtok($permission->name, ' ');
+                return $permission;  // Return the updated permission object
+            });
+        });
 
         return view('role.create',compact('permissions'));
     }
@@ -98,8 +110,22 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        $permissions = Permission::all()->pluck('name', 'id')->toArray();
-        return view('role.edit',compact('permissions','role'));
+        $permissions = Permission::all();
+        // Group by the module (the part before the first space in the permission name)
+        $permissions = $permissions->groupBy(function ($permission) {
+            // Extract the first part of the permission name (before the first space), which is the module
+            return ucfirst(trim(strstr($permission->name, ' '), ' '));
+        })->map(function ($group) {
+            // For each group, modify the 'name' field to contain only the first part (before the first space)
+            return $group->map(function ($permission) {
+                // Modify the permission name to only have the module (first part before the space)
+                $permission->name = strtok($permission->name, ' ');
+                return $permission;  // Return the updated permission object
+            });
+        });
+
+        $selectedPermissions = $role->permissions()->pluck('id')->toArray();
+        return view('role.edit',compact('permissions','role', 'selectedPermissions'));
     }
 
     /**

@@ -31,115 +31,31 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    @php
-                                    $modules=['dashboard','client','advocate','practice areas','employee','document','doctype','member','group','court','highcourt','bench','cause','case','todo','bill','tax','diary','timesheet','expense','feereceived','appointment','calendar','motions','crm','support','setting'];
-                                    @endphp
-                                    @foreach($modules as $module)
-                                        <tr>
-                                            <td width="10%"><input type="checkbox" class="form-check-input ischeck" name="checkall" data-id="{{str_replace(' ', '', $module)}}" ></td>
-                                            <td width="10%"><label class="ischeck" data-id="{{str_replace(' ', '', $module)}}">{{ ucfirst($module) }}</label></td>
-                                            <td>
-                                                <div class="row">
-                                                    @if(in_array('manage '.$module,(array) $permissions))
-                                                        @if($key = array_search('manage '.$module,$permissions))
-                                                            <div class="col-md-3 form-check">
-                                                                {{Form::checkbox('permissions[]',$key,$role->permission, ['class'=>'form-check-input isscheck isscheck_'.str_replace(' ', '', $module),'id' =>'permission'.$key])}}
-                                                                {{Form::label('permission'.$key,'Manage',['class'=>'form-check-label'])}}<br>
-                                                            </div>
-                                                        @endif
-                                                    @endif
-                                                    @if(in_array('create '.$module,(array) $permissions))
-                                                        @if($key = array_search('create '.$module,$permissions))
-                                                            <div class="col-md-3 form-check">
-                                                                {{Form::checkbox('permissions[]',$key,$role->permission, ['class'=>'form-check-input isscheck isscheck_'.str_replace(' ', '', $module),'id' =>'permission'.$key])}}
-                                                                {{Form::label('permission'.$key,'Create',['class'=>'form-check-label'])}}<br>
-                                                            </div>
-                                                        @endif
-                                                    @endif
-                                                    @if(in_array('duplicate '.$module,(array) $permissions))
-                                                    @if($key = array_search('duplicate '.$module,$permissions))
-                                                        <div class="col-md-3 form-check">
-                                                            {{Form::checkbox('permissions[]',$key,$role->permission, ['class'=>'form-check-input isscheck isscheck_'.str_replace(' ', '', $module),'id' =>'permission'.$key])}}
-                                                            {{Form::label('permission'.$key,'duplicate',['class'=>'form-check-label'])}}<br>
+                                        @foreach ($permissions as $module => $permissionItems)
+                                            @if(!in_array($module,['role' , 'permission']))
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-check">
+                                                            <input type="checkbox" class="form-check-input ischeck" name="checkall" data-id="{{str_replace(' ', '', $module)}}">
                                                         </div>
-                                                    @endif
-                                                    @endif
-                                                    @if(in_array('edit '.$module,(array) $permissions))
-                                                        @if($key = array_search('edit '.$module,$permissions))
+                                                    </td>
+                                                    <td>
+                                                        <label class="ischeck" data-id="{{str_replace(' ', '', $module)}}">{{ $module }}</label>
+                                                    </td>
+                                                    @foreach ($permissionItems as $permission)
+                                                    <td>
+                                                        <div class="row">
                                                             <div class="col-md-3 form-check">
-                                                                {{Form::checkbox('permissions[]',$key,$role->permission, ['class'=>'form-check-input isscheck isscheck_'.str_replace(' ', '', $module),'id' =>'permission'.$key])}}
-                                                                {{Form::label('permission'.$key,'Edit',['class'=>'form-check-label'])}}<br>
+                                                                {{Form::checkbox('permissions[]',$permission->id,in_array($permission->id,$selectedPermissions), ['class'=>'form-check-input isscheck isscheck_'.str_replace(' ', '', $module),'id' =>'permission'.$permission->id])}}
+                                                                {{Form::label('permission'.$permission->id,$permission->name,['class'=>'form-check-label'])}}<br>
                                                             </div>
-                                                        @endif
-                                                    @endif
-                                                    @if(in_array('delete '.$module,(array) $permissions))
-                                                        @if($key = array_search('delete '.$module,$permissions))
-                                                            <div class="col-md-3 form-check">
-                                                                {{Form::checkbox('permissions[]',$key,$role->permission, ['class'=>'form-check-input isscheck isscheck_'.str_replace(' ', '', $module),'id' =>'permission'.$key])}}
-                                                                {{Form::label('permission'.$key,'Delete',['class'=>'form-check-label'])}}<br>
-                                                            </div>
-                                                        @endif
-                                                    @endif
-                                                    @if(in_array('show '.$module,(array) $permissions))
-                                                        @if($key = array_search('show '.$module,$permissions))
-                                                            <div class="col-md-3 form-check">
-                                                                {{Form::checkbox('permissions[]',$key,$role->permission, ['class'=>'form-check-input isscheck isscheck_'.str_replace(' ', '', $module),'id' =>'permission'.$key])}}
-                                                                {{Form::label('permission'.$key,'Show',['class'=>'form-check-label'])}}<br>
-                                                            </div>
-                                                        @endif
-                                                    @endif
-                                                    @if(in_array('view '.$module,(array) $permissions))
-                                                        @if($key = array_search('view '.$module,$permissions))
-                                                            <div class="col-md-3 form-check">
-                                                                {{Form::checkbox('permissions[]',$key,$role->permission, ['class'=>'form-check-input isscheck isscheck_'.str_replace(' ', '', $module),'id' =>'permission'.$key])}}
-                                                                {{Form::label('permission'.$key,'Show',['class'=>'form-check-label'])}}<br>
-                                                            </div>
-                                                        @endif
-                                                    @endif
-                                                    @if(in_array('move '.$module,(array) $permissions))
-                                                        @if($key = array_search('move '.$module,$permissions))
-                                                            <div class="col-md-3 form-check">
-                                                                {{Form::checkbox('permissions[]',$key,$role->permission, ['class'=>'form-check-input isscheck isscheck_'.str_replace(' ', '', $module),'id' =>'permission'.$key])}}
-                                                                {{Form::label('permission'.$key,'Move',['class'=>'form-check-label'])}}<br>
-                                                            </div>
-                                                        @endif
-                                                    @endif
-                                                    @if(in_array('client permission '.$module,(array) $permissions))
-                                                        @if($key = array_search('client permission '.$module,$permissions))
-                                                            <div class="col-md-3 form-check">
-                                                                {{Form::checkbox('permissions[]',$key,$role->permission, ['class'=>'form-check-input isscheck isscheck_'.str_replace(' ', '', $module),'id' =>'permission'.$key])}}
-                                                                {{Form::label('permission'.$key,'Client Permission',['class'=>'form-check-label'])}}<br>
-                                                            </div>
-                                                        @endif
-                                                    @endif
-                                                    @if(in_array('invite user '.$module,(array) $permissions))
-                                                        @if($key = array_search('invite user '.$module,$permissions))
-                                                            <div class="col-md-3 form-check">
-                                                                {{Form::checkbox('permissions[]',$key,$role->permission, ['class'=>'form-check-input isscheck isscheck_'.str_replace(' ', '', $module),'id' =>'permission'.$key])}}
-                                                                {{Form::label('permission'.$key,'Invite User ',['class'=>'form-check-label'])}}<br>
-                                                            </div>
-                                                        @endif
-                                                    @endif
-                                                    @if(in_array('change password '.$module,(array) $permissions))
-                                                        @if($key = array_search('change password '.$module,$permissions))
-                                                            <div class="col-md-3 form-check">
-                                                                {{Form::checkbox('permissions[]',$key,$role->permission, ['class'=>'form-check-input isscheck isscheck_'.str_replace(' ', '', $module),'id' =>'permission'.$key])}}
-                                                                {{Form::label('permission'.$key,'Change Password ',['class'=>'form-check-label'])}}<br>
-                                                            </div>
-                                                        @endif
-                                                    @endif
-                                                    @if(in_array('buy '.$module,(array) $permissions))
-                                                        @if($key = array_search('buy '.$module,$permissions))
-                                                            <div class="col-md-3 form-check">
-                                                                {{Form::checkbox('permissions[]',$key,$role->permission, ['class'=>'form-check-input isscheck isscheck_'.str_replace(' ', '', $module),'id' =>'permission'.$key])}}
-                                                                {{Form::label('permission'.$key,'Buy',['class'=>'form-check-label'])}}<br>
-                                                            </div>
-                                                        @endif
-                                                    @endif
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                                        </div>
+                                                    </td>
+                                                    @endforeach
+                                                    <td colspan="10"></td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

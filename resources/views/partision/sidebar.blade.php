@@ -105,11 +105,11 @@
                                 </li>
                             @endcan
 
-                            <!-- @can('manage permission')
+                            @can('manage permission')
                                 <li class="dash-item {{ in_array(Request::segment(1), ['permissions', '']) ? ' active' : '' }}">
                                     <a class="dash-link" href="{{ route('permissions.index') }}">{{ __('Permissions') }}</a>
                                 </li>
-                            @endcan -->
+                            @endcan
 
                             @can('manage user')
                                 <li class="dash-item dash-hasmenu {{ request()->is('users*') ? 'active' : '' }}">
@@ -328,6 +328,8 @@
                 @endcan
 
                 @if (\Auth::user()->type == 'company' || \Auth::user()->type == 'employee' || \Auth::user()->type == 'advocate')
+                            
+                            
                     <li class="dash-item dash-hasmenu">
                         @if (\Auth::user()->type == 'employee' || \Auth::user()->type == 'advocate')
                             <a href="#!" class="dash-link"><span class="dash-micon"><i
@@ -345,11 +347,17 @@
 
                             @can('manage timesheet')
                                 <li
-                                    class="dash-item dash-hasmenu {{ in_array(Request::segment(1), ['timesheet']) ? ' active' : '' }}">
+                                    class="dash-item {{ in_array(Request::segment(1), ['timesheet']) ? ' active' : '' }}">
                                     <a href="{{ route('timesheet.index') }}" class="dash-link">{{ __('Timesheet') }}
                                         <!-- <span class="dash-micon"><i class="ti ti-list-check"></i></span> -->
                                         <!-- <span class="dash-mtext">{{ __('Timesheet') }}</span> -->
                                     </a>
+                                </li>
+                            @endif
+
+                            @can('manage leave')
+                                <li class="dash-item">
+                                    <a class="dash-link" href="{{ route('leave.index') }}">{{ __('Leave') }}</a>
                                 </li>
                             @endif
 
@@ -359,18 +367,14 @@
                                         href="{{ route('attendance.index') }}">{{ __('Attendance') }}</a>
                                 </li>
                             @endif
-                            
-                            @can('manage holiday')
-                                <li class="dash-item ">
-                                    <a class="dash-link" href="{{ route('holiday.index') }}">{{ __('Holiday') }}</a>
-                                </li>
-                            @endif
 
-                            @can('manage leave')
-                                <li class="dash-item">
-                                    <a class="dash-link" href="{{ route('leave.index') }}">{{ __('Leave') }}</a>
+                            @can('manage training')
+                                <li
+                                    class="dash-item {{ Request::segment(1) == 'training' ? 'active' : '' }}">
+                                    <a class="dash-link"
+                                        href="{{ route('training.index') }}">{{ __('Training List') }}</a>
                                 </li>
-                            @endif
+                            @endcan
                             
                             @can('manage meeting')
                                 <li class="dash-item">
@@ -378,19 +382,7 @@
                                         href="{{ !empty(\Auth::user()->getDefualtViewRouteByModule('meeting')) ? route(\Auth::user()->getDefualtViewRouteByModule('meeting')) : route('meeting.index') }}">{{ __('Meeting') }}</a>
                                 </li>
                             @endif
-                            
-                            @can('manage asset')
-                                <li class="dash-item">
-                                    <a class="dash-link" href="{{ route('account-assets.index') }}">{{ __('Asset') }}</a>
-                                </li>
-                            @endif
-
-                            @can('manage document upload')
-                                <li class="dash-item">
-                                    <a class="dash-link" href="{{ route('document-upload.index') }}">{{ __('Document') }}</a>
-                                </li>
-                            @endif
-
+                                                        
                             @can('manage company policy')
                                 <li class="dash-item">
                                     <a class="dash-link"
@@ -398,10 +390,17 @@
                                 </li>
                             @endif
 
+
                             <li class="dash-item dash-hasmenu">
-                                <a class="dash-link" href="#">{{ __('HR Admin') }}<span class="dash-arrow"><i
-                                            data-feather="chevron-right"></i></span></a>
+                                <a class="dash-link" href="#">{{ __('HR Admin') }}
+                                    <span class="dash-arrow"><i data-feather="chevron-right"></i></span>
+                                </a>
                                 <ul class="dash-submenu">
+                                    @can('manage holiday')
+                                        <li class="dash-item ">
+                                            <a class="dash-link" href="{{ route('holiday.index') }}">{{ __('Holiday') }}</a>
+                                        </li>
+                                    @endif
 
                                     @can('manage award')
                                         <li class="dash-item">
@@ -455,6 +454,18 @@
                                                 href="{{ route('termination.index') }}">{{ __('Termination') }}</a>
                                         </li>
                                     @endcan
+
+                                    @can('manage asset')
+                                        <li class="dash-item">
+                                            <a class="dash-link" href="{{ route('account-assets.index') }}">{{ __('Asset') }}</a>
+                                        </li>
+                                    @endif
+
+                                    @can('manage document upload')
+                                        <li class="dash-item">
+                                            <a class="dash-link" href="{{ route('document-upload.index') }}">{{ __('Document') }}</a>
+                                        </li>
+                                    @endif
 
                                     <li class="dash-item {{ request()->is('category*') ? 'active' : '' }}">
                                         <a href="{{ route('category.index') }}" class="dash-link">
@@ -528,27 +539,24 @@
                                 </ul>
                             </li>
 
-                            <li
-                                class="dash-item dash-hasmenu {{ Request::segment(1) == 'training' || Request::segment(1) == 'trainer' ? 'active dash-trigger' : '' }}">
-                                <a class="dash-link" href="#">{{ __('Training') }}<span class="dash-arrow"><i
-                                            data-feather="chevron-right"></i></span></a>
-                                <ul class="dash-submenu">
-                                    @can('manage training')
-                                        <li
-                                            class="dash-item {{ Request::segment(1) == 'training' ? 'active' : '' }}">
-                                            <a class="dash-link"
-                                                href="{{ route('training.index') }}">{{ __('Training List') }}</a>
-                                        </li>
-                                    @endcan
+                            
 
-                                    @can('manage trainer')
-                                        <li
-                                            class="dash-item {{ Request::segment(1) == 'trainer' ? 'active' : '' }}">
-                                            <a class="dash-link" href="{{ route('trainer.index') }}">{{ __('Trainer') }}</a>
-                                        </li>
-                                    @endcan
-                                </ul>
-                            </li>
+                            {{--
+                                <li
+                                    class="dash-item dash-hasmenu {{ Request::segment(1) == 'training' ? 'active dash-trigger' : '' }}">
+                                    <a class="dash-link" href="#">{{ __('Training') }}<span class="dash-arrow"><i
+                                                data-feather="chevron-right"></i></span></a>
+                                    <ul class="dash-submenu">
+                                        
+                                        @can('manage trainer')
+                                            <li
+                                                class="dash-item {{ Request::segment(1) == 'trainer' ? 'active' : '' }}">
+                                                <a class="dash-link" href="{{ route('trainer.index') }}">{{ __('Trainer') }}</a>
+                                            </li>
+                                        @endcan
+                                    </ul>
+                                </li>
+                            --}}
 
                         </ul>
                     </li>
@@ -728,6 +736,15 @@
                         <a class="dash-link" href="{{ route('admin.settings') }}">
                             <span class="dash-micon"><i class="ti ti-settings"></i></span><span
                                 class="dash-mtext">{{ __('System Settings') }}</span>
+                        </a>
+                    </li>
+                @endcan
+
+                @can('manage virtual meeting')
+                    <li class="dash-item {{ Request::route()->getName() == 'zoom-meetings.index' ? ' active' : '' }}">
+                        <a class="dash-link" href="{{ route('zoom-meetings.index') }}">
+                            <span class="dash-micon"><i class="ti ti-settings"></i></span><span
+                                class="dash-mtext">{{ __('Virtual Meetings') }}</span>
                         </a>
                     </li>
                 @endcan
