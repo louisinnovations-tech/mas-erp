@@ -546,6 +546,14 @@
                                     <a class="dash-link" href="{{ route('lead.index') }}">{{ __('Lead') }}</a>
                                 </li>
                             @endcan
+
+                            @can('manage lead stage')
+                                <li class="dash-item ">
+                                    <a class="dash-link"
+                                        href="{{ route('leadStage.index') }}">{{ __('Lead Stage') }}</a>
+                                </li>
+                            @endcan
+
                             @can('manage deal')
                                 <li
                                     class="dash-item dash-hasmenu {{ Request::segment(1) == 'deal' ? 'active' : '' }}">
@@ -553,53 +561,13 @@
                                 </li>
                             @endif
 
-                            @can('manage tax')
-                                <li class="dash-item ">
-                                    <a class="dash-link" href="{{ route('taxs.index') }}">{{ __('Tax') }}</a>
-                                </li>
-                            @endcan
-
-                            @can('manage doctype')
-                                <li class="dash-item ">
-                                    <a class="dash-link"
-                                        href="{{ route('doctype.index') }}">{{ __('Document Type') }}</a>
-                                </li>
-
-                                <li class="dash-item ">
-                                    <a class="dash-link"
-                                        href="{{ route('doctsubype.index') }}">{{ __('Document Sub-type') }}</a>
-                                </li>
-                            @endcan
-                            {{-- <li class="dash-item ">
-                                <a class="dash-link" href="{{ route('hearingType.index') }}">{{ __('Hearing Type') }}</a>
-                            </li> --}}
-                            @can('manage motions')
-                                <li class="dash-item ">
-                                    <a class="dash-link"
-                                        href="{{ route('motions.index') }}">{{ __('Motions Types') }}</a>
-                                </li>
-                            @endcan
-                            
-                            @if (Auth::user()->can('manage crm'))
-                                <li class="dash-item ">
-                                    <a class="dash-link"
-                                        href="{{ route('pipeline.index') }}">{{ __('Pipeline') }}</a>
-                                </li>
-                                <li class="dash-item ">
-                                    <a class="dash-link"
-                                        href="{{ route('leadStage.index') }}">{{ __('Lead Stage') }}</a>
-                                </li>
+                            @can('manage deal stage')
                                 <li class="dash-item ">
                                     <a class="dash-link"
                                         href="{{ route('dealStage.index') }}">{{ __('Deal Stage') }}</a>
                                 </li>
-                                <li class="dash-item ">
-                                    <a class="dash-link" href="{{ route('source.index') }}">{{ __('Source') }}</a>
-                                </li>
-                                <li class="dash-item ">
-                                    <a class="dash-link" href="{{ route('label.index') }}">{{ __('Label') }}</a>
-                                </li>
-                            @endif
+                            @endcan
+                            
                         </ul>
                     </li>
                 @endcan
@@ -683,6 +651,51 @@
                             <li class="dash-item">
                                 <a class="dash-link" href="{{ route('goaltype.index') }}">{{ __('Goal Type') }}</a>
                             </li>
+                            @can('manage tax')
+                                <li class="dash-item ">
+                                    <a class="dash-link" href="{{ route('taxs.index') }}">{{ __('Tax') }}</a>
+                                </li>
+                            @endcan
+
+                            @can('manage doctype')
+                                <li class="dash-item ">
+                                    <a class="dash-link"
+                                        href="{{ route('doctype.index') }}">{{ __('Document Type') }}</a>
+                                </li>
+
+                                <li class="dash-item ">
+                                    <a class="dash-link"
+                                        href="{{ route('doctsubype.index') }}">{{ __('Document Sub-type') }}</a>
+                                </li>
+                            @endcan
+                            {{-- <li class="dash-item ">
+                                <a class="dash-link" href="{{ route('hearingType.index') }}">{{ __('Hearing Type') }}</a>
+                            </li> --}}
+                            @can('manage motions')
+                                <li class="dash-item ">
+                                    <a class="dash-link"
+                                        href="{{ route('motions.index') }}">{{ __('Motions Types') }}</a>
+                                </li>
+                            @endcan
+                            
+                            @can('manage pipeline')
+                                <li class="dash-item ">
+                                    <a class="dash-link"
+                                        href="{{ route('pipeline.index') }}">{{ __('Pipeline') }}</a>
+                                </li>
+                            @endcan
+                            
+                            @can('manage source')
+                                <li class="dash-item ">
+                                    <a class="dash-link" href="{{ route('source.index') }}">{{ __('Source') }}</a>
+                                </li>
+                            @endcan
+
+                            @can('manage label')
+                                <li class="dash-item ">
+                                    <a class="dash-link" href="{{ route('label.index') }}">{{ __('Label') }}</a>
+                                </li>
+                            @endcan
                         </ul>
                     </li>
                 @endif
@@ -753,6 +766,7 @@
                                 class="dash-mtext">{{ __('System Settings') }}</span>
                         </a>
                     </li>
+                    
                 @endcan
 
             </ul>
