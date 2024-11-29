@@ -293,7 +293,14 @@
                             @can('manage attendance')
                                 <li class="dash-item">
                                     <a class="dash-link"
-                                        href="{{ route('attendance.index') }}">{{ __('Attendance') }}</a>
+                                        href="{{ route('monthly.attendance') }}">{{ __('Monthly Attendance') }}</a>
+                                </li>
+                            @endif
+
+                            @can('manage attendance')
+                                <li class="dash-item">
+                                    <a class="dash-link"
+                                        href="{{ route('attendance.index') }}">{{ __('Employees Data') }}</a>
                                 </li>
                             @endif
 
@@ -301,7 +308,13 @@
                                 <li
                                     class="dash-item {{ Request::segment(1) == 'training' ? 'active' : '' }}">
                                     <a class="dash-link"
-                                        href="{{ route('training.index') }}">{{ __('Training List') }}</a>
+                                        href="{{ route('training.index') }}">{{ __('Trainings') }}</a>
+                                </li>
+                            @endcan
+
+                            @can('manage contract')
+                                <li class="dash-item">
+                                    <a class="dash-link" href="{{ route('contracts.index') }}">{{ __('Recruitments') }}</a>
                                 </li>
                             @endcan
                             
@@ -323,16 +336,11 @@
 
 
                             <li class="dash-item dash-hasmenu">
-                                <a class="dash-link" href="#">{{ __('HR Admin') }}
+                                <a class="dash-link" href="#">{{ __('HR Admin Setup') }}
                                     <span class="dash-arrow"><i data-feather="chevron-right"></i></span>
                                 </a>
                                 <ul class="dash-submenu">
-                                    @can('manage holiday')
-                                        <li class="dash-item ">
-                                            <a class="dash-link" href="{{ route('holiday.index') }}">{{ __('Holiday') }}</a>
-                                        </li>
-                                    @endif
-
+                                   
                                     @can('manage award')
                                         <li class="dash-item">
                                             <a class="dash-link" href="{{ route('award.index') }}">{{ __('Award') }}</a>
@@ -386,60 +394,20 @@
                                         </li>
                                     @endcan
 
+                                    @can('manage holiday')
+                                        <li class="dash-item ">
+                                            <a class="dash-link" href="{{ route('holiday.index') }}">{{ __('Holiday') }}</a>
+                                        </li>
+                                    @endif
+
                                     @can('manage asset')
                                         <li class="dash-item">
                                             <a class="dash-link" href="{{ route('account-assets.index') }}">{{ __('Asset') }}</a>
                                         </li>
-                                    @endif
+                                    @endcan
 
-                                    @can('manage document upload')
-                                        <li class="dash-item">
-                                            <a class="dash-link" href="{{ route('document-upload.index') }}">{{ __('Document') }}</a>
-                                        </li>
-                                    @endif
 
-                                    <li class="dash-item {{ request()->is('category*') ? 'active' : '' }}">
-                                        <a href="{{ route('category.index') }}" class="dash-link">
-                                            <!-- <span class="dash-micon"><i class="ti ti-layout-2"></i></span> -->
-                                            <span class="dash-mtext">{{ __('Setup') }}</span>
-                                        </a>
-                                    </li>
-                                    <li class="dash-item">
-                                        <a class="dash-link"
-                                            href="{{ route('department.index') }}">{{ __('Department') }}</a>
-                                    </li>
-                                    <li class="dash-item">
-                                        <a class="dash-link"
-                                            href="{{ route('designation.index') }}">{{ __('Designation') }}</a>
-                                    </li>
-                                    <li class="dash-item">
-                                        <a class="dash-link"
-                                            href="{{ route('salaryType.index') }}">{{ __('Salary Type') }}</a>
-                                    </li>
-                                    <li class="dash-item">
-                                        <a class="dash-link"
-                                            href="{{ route('leaveType.index') }}">{{ __('Leave Type') }}</a>
-                                    </li>
-                                    <li class="dash-item">
-                                        <a class="dash-link"
-                                            href="{{ route('award-type.index') }}">{{ __('Award Type') }}</a>
-                                    </li>
-                                    <li class="dash-item">
-                                        <a class="dash-link"
-                                            href="{{ route('termination-type.index') }}">{{ __('Termination Type') }}</a>
-                                    </li>
-                                    <li class="dash-item">
-                                        <a class="dash-link"
-                                            href="{{ route('training-type.index') }}">{{ __('Training Type') }}</a>
-                                    </li>
-                                    <li class="dash-item">
-                                        <a class="dash-link"
-                                            href="{{ route('performanceType.index') }}">{{ __('Performance Type') }}</a>
-                                    </li>
-                                    <li class="dash-item">
-                                        <a class="dash-link"
-                                            href="{{ route('competencies.index') }}">{{ __('Competencies') }}</a>
-                                    </li>
+                                    
                                 </ul>
                             </li>
                             
@@ -501,11 +469,12 @@
                     </li> 
                 @endcan
 
-                @can('manage contract')
+                @can('manage document upload')
                     <li class="dash-item">
-                        <a class="dash-link" href="{{ route('contracts.index') }}">{{ __('Contracts') }}</a>
-                    </li> 
+                        <a class="dash-link" href="{{ route('document-upload.index') }}">{{ __('Contracts') }}</a>
+                    </li>
                 @endcan
+
 
                 {{--
                     @if (Auth::user()->can('manage support'))
@@ -572,20 +541,20 @@
                     </li>
                 @endcan
 
-                @can('manage group')
-                    <li class="dash-item {{ in_array(Request::segment(1), ['groups']) ? ' active' : '' }}">
-                        <a class="dash-link" href="{{ route('groups.index') }}">
-                            <span class="dash-micon"><i class="ti ti-circle-square"></i></span>
-                            {{ __('Group') }}
-                        </a>
-                    </li>
-                @endcan
-
                 @can('manage virtual meeting')
                     <li class="dash-item {{ Request::route()->getName() == 'zoom-meetings.index' ? ' active' : '' }}">
                         <a class="dash-link" href="{{ route('zoom-meetings.index') }}">
                             <span class="dash-micon"><i class="ti ti-settings"></i></span><span
                                 class="dash-mtext">{{ __('Virtual Meetings') }}</span>
+                        </a>
+                    </li>
+                @endcan
+
+                @can('manage group')
+                    <li class="dash-item {{ in_array(Request::segment(1), ['groups']) ? ' active' : '' }}">
+                        <a class="dash-link" href="{{ route('groups.index') }}">
+                            <span class="dash-micon"><i class="ti ti-circle-square"></i></span>
+                            {{ __('Group') }}
                         </a>
                     </li>
                 @endcan
@@ -696,6 +665,49 @@
                                     <a class="dash-link" href="{{ route('label.index') }}">{{ __('Label') }}</a>
                                 </li>
                             @endcan
+
+                            <li class="dash-item {{ request()->is('category*') ? 'active' : '' }}">
+                                <a href="{{ route('category.index') }}" class="dash-link">
+                                    <!-- <span class="dash-micon"><i class="ti ti-layout-2"></i></span> -->
+                                    <span class="dash-mtext">{{ __('Setup') }}</span>
+                                </a>
+                            </li>
+                            <li class="dash-item">
+                                <a class="dash-link"
+                                    href="{{ route('department.index') }}">{{ __('Department') }}</a>
+                            </li>
+                            <li class="dash-item">
+                                <a class="dash-link"
+                                    href="{{ route('designation.index') }}">{{ __('Designation') }}</a>
+                            </li>
+                            <li class="dash-item">
+                                <a class="dash-link"
+                                    href="{{ route('salaryType.index') }}">{{ __('Salary Type') }}</a>
+                            </li>
+                            <li class="dash-item">
+                                <a class="dash-link"
+                                    href="{{ route('leaveType.index') }}">{{ __('Leave Type') }}</a>
+                            </li>
+                            <li class="dash-item">
+                                <a class="dash-link"
+                                    href="{{ route('award-type.index') }}">{{ __('Award Type') }}</a>
+                            </li>
+                            <li class="dash-item">
+                                <a class="dash-link"
+                                    href="{{ route('termination-type.index') }}">{{ __('Termination Type') }}</a>
+                            </li>
+                            <li class="dash-item">
+                                <a class="dash-link"
+                                    href="{{ route('training-type.index') }}">{{ __('Training Type') }}</a>
+                            </li>
+                            <li class="dash-item">
+                                <a class="dash-link"
+                                    href="{{ route('performanceType.index') }}">{{ __('Performance Type') }}</a>
+                            </li>
+                            <li class="dash-item">
+                                <a class="dash-link"
+                                    href="{{ route('competencies.index') }}">{{ __('Competencies') }}</a>
+                            </li>
                         </ul>
                     </li>
                 @endif
