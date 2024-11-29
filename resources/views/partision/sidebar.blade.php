@@ -290,7 +290,7 @@
                                 </li>
                             @endif
 
-                            @can('manage attendance')
+                            @can('manage monthly attendance')
                                 <li class="dash-item">
                                     <a class="dash-link"
                                         href="{{ route('monthly.attendance') }}">{{ __('Monthly Attendance') }}</a>
