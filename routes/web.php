@@ -125,6 +125,7 @@ use App\Http\Controllers\GoalTypeController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PracticeAreaController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SalaryTypeController;
 use App\Models\User;
 
@@ -935,6 +936,9 @@ Route::group(['middleware' => ['verified']], function () {
     Route::get('export/invoice', [InvoiceController::class, 'export'])->name('invoice.export');
 
     Route::get('export/creditnote', [CreditNoteController::class, 'export'])->name('creditnote.export');
+    Route::group(['middleware' => ['auth', 'XSS', 'revalidate',],], function () {
+        Route::resource('credit-note', CreditNoteController::class);
+    });
 
     Route::get('export/goal', [GoalController::class, 'export'])->name('goal.export');
 
@@ -978,6 +982,7 @@ Route::group(['middleware' => ['verified']], function () {
             Route::post('bulk-attendance', [AttendanceController::class, 'bulkAttendanceData'])->name('bulk.attendance');
             Route::post('employee/attendance', [AttendanceController::class, 'attendance'])->name('employee.attendance');
             Route::resource('attendance', AttendanceController::class);
+            Route::get('monthly-attendance', [ReportController::class, 'attendance'])->name('monthly.attendance');
         }
     );
 
