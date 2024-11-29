@@ -5,7 +5,7 @@
 <footer class="dash-footer">
     <div class="footer-wrapper">
         <div class="py-1">
-            <span class="text-muted">{{($settings['footer_text']) ? $settings['footer_text'] :  __('© Copyright AdvocateGo') }} {{ date('Y') }}</span>
+            <span class="text-muted">{{($settings['footer_text']) ? $settings['footer_text'] :  __('© Copyright MAS ERP System') }} {{ date('Y') }}</span>
         </div>
     </div>
 </footer>
