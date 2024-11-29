@@ -113,8 +113,9 @@
 
                             @can('manage user')
                                 <li class="dash-item dash-hasmenu {{ request()->is('users*') ? 'active' : '' }}">
-                                    <a href="{{ route('users.list') }}" class="dash-link"><span class="dash-micon"><i
-                                                class="ti ti-users"></i></span><span class="dash-mtext">{{ __('User') }}</span>
+                                    <a href="{{ route('users.list') }}" class="dash-link">
+                                        <!-- <span class="dash-micon"><i class="ti ti-users"></i></span> -->
+                                        <span class="dash-mtext">{{ __('User') }}</span>
                                     </a>
                                 </li>
                             @endcan
