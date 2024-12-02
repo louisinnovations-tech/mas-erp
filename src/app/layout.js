@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Sidebar from '@/components/Sidebar'
+import { Toaster } from '@/components/ui/toaster'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,8 +16,9 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <div className="flex min-h-screen">
           <Sidebar />
-          <main className="flex-1 p-4 md:p-6 bg-gray-100">
+          <main className="flex-1 p-4 md:p-6 bg-gray-100 overflow-auto">
             {children}
+            <Toaster />
           </main>
         </div>
       </body>
