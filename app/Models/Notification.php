@@ -18,7 +18,7 @@ class Notification extends Model
         'message',
         'data',
         'read_at',
-        'channels', // email, sms, push, in_app
+        'channels',
         'scheduled_for',
         'sent_at'
     ];
@@ -31,7 +31,6 @@ class Notification extends Model
         'channels' => 'array'
     ];
 
-    // Relationships
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -42,7 +41,6 @@ class Notification extends Model
         return $this->morphTo();
     }
 
-    // Scopes
     public function scopeUnread($query)
     {
         return $query->whereNull('read_at');
@@ -57,7 +55,6 @@ class Notification extends Model
             });
     }
 
-    // Methods
     public function markAsRead()
     {
         $this->update(['read_at' => now()]);
@@ -70,7 +67,6 @@ class Notification extends Model
 
     public function send()
     {
-        // Process each channel
         foreach ($this->channels as $channel) {
             switch ($channel) {
                 case 'email':
@@ -101,59 +97,19 @@ class Notification extends Model
     protected function sendSMS()
     {
         if ($this->user && $this->user->phone) {
-            // Integrate with SMS service (Twilio, etc.)
-            // Implementation will depend on SMS service provider
+            // SMS integration placeholder
         }
     }
 
     protected function sendPushNotification()
     {
         if ($this->user && $this->user->push_token) {
-            // Integrate with push notification service
-            // Implementation will depend on service (Firebase, etc.)
+            // Push notification integration placeholder
         }
     }
 
     protected function sendInApp()
     {
-        // Broadcast event for real-time notification
         broadcast(new \App\Events\NewNotification($this))->toOthers();
-    }
-
-    // Notifications can be related to various models
-    public static function createForMeeting($meeting, $type, $recipients)
-    {
-        foreach ($recipients as $recipient) {
-            self::create([
-                'type' => $type,
-                'user_id' => $recipient->id,
-                'title' => "Meeting: {$meeting->title}",
-                'message' => self::getMeetingMessage($type, $meeting),
-                'data' => [
-                    'meeting_id' => $meeting->id,
-                    'start_time' => $meeting->start_time,
-                    'location' => $meeting->location
-                ],
-                'channels' => ['in_app', 'email'],
-                'relatable_type' => Meeting::class,
-                'relatable_id' => $meeting->id
-            ]);
-        }
-    }
-
-    protected static function getMeetingMessage($type, $meeting)
-    {
-        switch ($type) {
-            case 'meeting_scheduled':
-                return "New meeting scheduled: {$meeting->title} on " . $meeting->start_time->format('M d, Y h:i A');
-            case 'meeting_updated':
-                return "Meeting details updated: {$meeting->title}";
-            case 'meeting_cancelled':
-                return "Meeting cancelled: {$meeting->title}";
-            case 'meeting_reminder':
-                return "Reminder: Meeting {$meeting->title} starts in 30 minutes";
-            default:
-                return $meeting->title;
-        }
     }
 }
