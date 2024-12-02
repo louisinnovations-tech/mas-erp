@@ -1,3 +1,9 @@
+<?php
+
+namespace App\Services\Calendar;
+
+use Google_Client;
+use Google_Service_Calendar;
 
 class GoogleCalendarService {
     protected $client;
