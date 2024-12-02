@@ -32,16 +32,16 @@ export default function Sidebar() {
 
       <div className={`${isOpen ? 'translate-x-0' : '-translate-x-full'} 
         transition-transform duration-200 ease-in-out fixed md:static 
-        bg-white border-r border-[#E7F2FE] h-full w-64 min-w-64 overflow-y-auto 
+        bg-white border-r border-accent h-full w-64 min-w-64 overflow-y-auto 
         z-40 md:translate-x-0 shadow-sm`}>
         <div className="p-4 space-y-4">
-          <div className="font-bold text-xl px-4 text-[#213964]">MAS ERP</div>
+          <div className="font-bold text-xl px-4 text-[#800000]">MAS ERP</div>
           {menuItems.map((item, index) => (
             <div key={index} className="space-y-1">
               {item.items ? (
                 <details className="group [&_summary::-webkit-details-marker]:hidden">
                   <summary className="flex cursor-pointer items-center justify-between 
-                    rounded-lg px-4 py-2 text-[#213964] hover:bg-[#E7F2FE]">
+                    rounded-lg px-4 py-2 text-[#576071] hover:bg-accent">
                     <span className="font-medium">{item.title}</span>
                     <ChevronDown className="h-5 w-5 transition-transform 
                       group-open:rotate-180" />
@@ -53,8 +53,8 @@ export default function Sidebar() {
                         href={subItem.href}
                         className={`rounded-lg px-4 py-2 text-sm 
                           ${pathname === subItem.href ? 
-                            'bg-[#E7F2FE] text-[#0064CB] font-medium' : 
-                            'text-[#213964] hover:bg-[#E7F2FE]'}`}
+                            'bg-accent text-[#800000] font-medium' : 
+                            'text-[#576071] hover:bg-accent'}`}
                       >
                         {subItem.title}
                       </Link>
@@ -66,8 +66,8 @@ export default function Sidebar() {
                   href={item.href}
                   className={`flex items-center rounded-lg px-4 py-2 
                     ${pathname === item.href ? 
-                      'bg-[#E7F2FE] text-[#0064CB] font-medium' : 
-                      'text-[#213964] hover:bg-[#E7F2FE]'}`}
+                      'bg-accent text-[#800000] font-medium' : 
+                      'text-[#576071] hover:bg-accent'}`}
                 >
                   {item.title}
                 </Link>
